@@ -27,3 +27,12 @@ codekit-config.json
 .sass-cache
 _asset_bundler_cache
 _site
+
+# 노쓸모
+.github
+test/**
+.editorconfig
+.gitattributes
+.travis.yml
+CHANGELOG.md
+docs/**
