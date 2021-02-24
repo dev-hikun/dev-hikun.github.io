@@ -263,7 +263,8 @@ defaults:
     values:
       layout: single
       author_profile: true
-      read_time: true
+      read_time: false
       comments: true
+      show_date: true
       share: true #포스트 공유기능
       related: true
