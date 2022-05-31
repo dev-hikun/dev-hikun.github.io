@@ -7,12 +7,13 @@ module.exports = {
   },
   plugins: [
     {
-      resolve: "gatsby-plugin-typescript",
+      resolve: 'gatsby-plugin-typescript',
       options: {
         isTSX: true,
         allExtensions: true,
       },
     },
+    `gatsby-plugin-emotion`,
     `gatsby-plugin-react-helmet`,
     `gatsby-plugin-image`,
     {
@@ -42,4 +43,4 @@ module.exports = {
     // To learn more, visit: https://gatsby.dev/offline
     // `gatsby-plugin-offline`,
   ],
-}
+};
