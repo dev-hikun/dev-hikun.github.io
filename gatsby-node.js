@@ -1,14 +1,15 @@
 const path = require('path');
 
-exports.createPages = async ({ actions }) => {
-  const { createPage } = actions;
-  createPage({
-    path: '/using-dsg',
-    component: require.resolve('./src/templates/using-dsg.js'),
-    context: {},
-    defer: true,
-  });
-};
+// DSG 방식을 사용할 때 해당 메소드 사용
+// exports.createPages = async ({ actions }) => {
+//   const { createPage } = actions;
+//   createPage({
+//     path: '/using-dsg',
+//     component: require.resolve('./src/templates/using-dsg.js'),
+//     context: {},
+//     defer: true,
+//   });
+// };
 
 // Setup Import Alias
 exports.onCreateWebpackConfig = ({ getConfig, actions }) => {
