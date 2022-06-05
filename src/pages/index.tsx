@@ -9,9 +9,9 @@ import THEME from 'assets/styles/theme';
 const indexPage: React.FC = () => {
   const [theme, toggleTheme] = useTheme();
   return (
-      <Header />
     <ThemeProvider theme={THEME[theme]}>
       <Global styles={GlobalStyle(THEME[theme])} />
+      <Header isDark={theme === 'dark'} themeChanged={toggleTheme} />
       <Text text={`Hello Gatsby`} />
     </ThemeProvider>
   );
