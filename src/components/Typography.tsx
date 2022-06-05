@@ -15,6 +15,7 @@ const typographyVaraintDict = {
     'subhead7',
     'subhead8',
     'subhead9',
+    'subhead10',
   ] as const,
   interface: ['body1', 'body2', 'description', 'catpion'] as const,
 };
@@ -95,6 +96,54 @@ const typographyStyleDic: Record<TypographyVariant, React.CSSProperties> = {
     fontWeight: 500,
     lineHeight: '21px',
     letterSpacing: '-0.3px',    
+  },
+  "subhead-subhead7": {
+    fontSize: 12,
+    fontWeight: 700,
+    lineHeight: '18px',
+    letterSpacing: '-0.3px',
+  },
+  "subhead-subhead8": {
+    fontSize: 12,
+    fontWeight: 500,
+    lineHeight: '18px',
+    letterSpacing: '-0.3px',
+  },
+  "subhead-subhead9": {
+    fontSize: 10,
+    fontWeight: 700,
+    lineHeight: '15px',
+    letterSpacing: '-0.3px',
+  },
+  "subhead-subhead10": {
+    fontSize: 10,
+    fontWeight: 500,
+    lineHeight: '15px',
+    letterSpacing: '-0.3px',
+  },
+  "interface-body1": {
+    fontSize: 16,
+    fontWeight: 400,
+    lineHeight: '24px',
+    letterSpacing: '-0.3px'
+  },
+  "interface-body2": {
+    fontSize: 14,
+    fontWeight: 400,
+    lineHeight: '22px',
+    letterSpacing: '-0.3px'
+  },
+  "interface-description": {
+    fontSize: 12,
+    fontWeight: 400,
+    lineHeight: '18px',
+    letterSpacing: '-0.3px'
+  },
+  "interface-catpion": {
+    fontSize: 10,
+    fontWeight: 400,
+    lineHeight: '16px',
+    letterSpacing: '-0.2px'
   }
 };
 
