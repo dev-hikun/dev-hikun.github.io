@@ -3,7 +3,6 @@ import styled from '@emotion/styled';
 import mixins from 'assets/styles/mixins';
 import { MdOutlineWbSunny as LightThemeIcon } from 'react-icons/md';
 import { RiMoonFill as DarkThemeIcon } from 'react-icons/ri';
-import { useTheme } from '@emotion/react';
 import { Theme } from 'assets/styles/theme';
 import { StaticImage } from 'gatsby-plugin-image';
 import Typography from 'components/Typography';
@@ -20,7 +19,7 @@ const Navigation = styled('nav')(({ theme }: NavigationProps) => {
     width: '100%',
     position: 'fixed',
     top: 0,
-    zIndex: 2,
+    zIndex: 10,
     span: {
       color: theme.color.gray['050'],
       fontWeight: 'bold',
@@ -60,7 +59,7 @@ const HeaderComponent = styled('header')(() => ({
   },
 }));
 
-const HeaderImageWrap = styled('div')(({ theme }: NavigationProps) => ({
+const HeaderImageWrap = styled('div')(() => ({
   width: '100%',
   height: '100%',
   position: 'absolute',
@@ -78,13 +77,20 @@ const HeaderImageWrap = styled('div')(({ theme }: NavigationProps) => ({
 const HeaderTextArea = styled('div')(({ theme }: NavigationProps) => ({
   width: theme.size.siteWidth,
   margin: '0 auto',
-  padding: '15rem 20px 5rem',
+  padding: '15rem 20px 0',
   position: 'relative',
   zIndex: 3,
   color: theme.color.gray['050'],
   [mixins.breakpoints.md]: {
-    padding: '12rem 20px 10%',
-  }
+    padding: '12rem 20px 0',
+  },
+}));
+
+const SmSizeBr = styled('br')(() => ({
+  display: 'none',
+  [mixins.breakpoints.sm]: {
+    display: 'initial',
+  },
 }));
 
 const Header: React.FC<HeaderProps> = ({ isDark, themeChanged }) => {
@@ -107,9 +113,17 @@ const Header: React.FC<HeaderProps> = ({ isDark, themeChanged }) => {
           />
         </HeaderImageWrap>
         <HeaderTextArea>
-          <Typography color="gray-050" variant="headline-h1" md="headline-h2" as="h1"> 이희현의 제멋대로 블로그 </Typography>
-          <Typography color="gray-200" variant="subhead-subhead4" md="subhead-subhead6" as="h3">The difference between a dream and a goal is a plan</Typography>
-          </HeaderTextArea>
+          <Typography color="gray-050" variant="headline-h1" md="headline-h2" sm="headline-h3" as="h1">
+            {' '}
+            이희현의 <SmSizeBr />
+            제멋대로 블로그{' '}
+          </Typography>
+          <Typography color="gray-200" variant="subhead-subhead4" md="subhead-subhead6" sm="subhead-subhead8" as="h3">
+            The difference <SmSizeBr />
+            between a dream and a goal <SmSizeBr />
+            is a plan
+          </Typography>
+        </HeaderTextArea>
       </HeaderComponent>
     </>
   );

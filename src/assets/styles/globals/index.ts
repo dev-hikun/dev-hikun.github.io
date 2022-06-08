@@ -5,13 +5,13 @@ const GlobalStyle = (theme: Theme) => css`
   * {
     box-sizing: border-box;
   }
-  html {
-    font-family: 'Noto Sans KR', serif;
-  }
   html,
-  body {
+  body,
+  button {
     margin: 0;
     padding: 0;
+    font-family: 'Noto Sans KR', serif;
+    font-size: 16px;
   }
   body {
     background-color: ${theme.color.background};

@@ -1,6 +1,8 @@
+import React from 'react';
+
 export type ColorVariantKey = '050' | '100' | '200' | '300' | '400' | '500' | '600' | '700' | '800' | '900';
 export type ThemeColorKey = 'gray' | 'blue' | 'red' | 'green' | 'yellow' | 'purple';
-const colors: Record<ThemeColorKey, Record<ColorVariantKey, string>> = {
+const colors: Record<ThemeColorKey, Record<ColorVariantKey, React.CSSProperties['color']>> = {
   gray: {
     '050': '#FDFDFD',
     '100': '#F2F2F2',
@@ -66,7 +68,7 @@ const colors: Record<ThemeColorKey, Record<ColorVariantKey, string>> = {
     '100': '#decaed',
     '200': '#c9a8e2',
     '300': '#b486d7',
-    '400': '#ffd630',
+    '400': '#9F64CC',
     '500': '#8a42c1',
     '600': '#72369f',
     '700': '#592a7c',
@@ -74,12 +76,14 @@ const colors: Record<ThemeColorKey, Record<ColorVariantKey, string>> = {
     '900': '#271236',
   },
 };
-export type ThemeSemanticColorKey = 'success' | 'info' | 'warning' | 'danger';
-const semanticColor: Record<ThemeSemanticColorKey, string> = {
+
+export type ThemeSemanticColorKey = 'success' | 'info' | 'warning' | 'danger' | 'white';
+const semanticColor: Record<ThemeSemanticColorKey, React.CSSProperties['color']> = {
   success: colors.green[500],
   info: colors.blue[500],
   warning: colors.yellow[500],
   danger: colors.red[500],
+  white: '#fff',
 };
 export type ThemeColorVariant = `${ThemeColorKey}-${ColorVariantKey}`;
 
