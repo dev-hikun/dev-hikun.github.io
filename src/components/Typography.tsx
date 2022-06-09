@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from '@emotion/styled';
-import { ColorDic, ThemeColorVariant, ThemeSemanticColorKey } from 'assets/styles/theme/colors';
+import { ThemeColorVariant, ThemeSemanticColorKey } from 'assets/styles/theme/colors';
 import mixins from 'assets/styles/mixins';
 import { Theme } from 'assets/styles/theme';
 
@@ -151,13 +151,12 @@ const typographyStyleDic: Record<TypographyVariant, React.CSSProperties> = {
 interface TypographyComponentProps {
   theme?: Theme;
   variant: TypographyVariant;
-  color?: ThemeSemanticColorKey | ThemeColorVariant;
+  themeColor?: ThemeSemanticColorKey | ThemeColorVariant;
   md?: TypographyVariant;
   sm?: TypographyVariant;
 }
 
-const Component = styled('span')(({ theme, variant, color, md, sm }: TypographyComponentProps) => ({
-  color: color ? ColorDic?.[color] : theme?.color?.text,
+const Component = styled('span')(({ variant, md, sm }: TypographyComponentProps) => ({
   ...typographyStyleDic[variant],
   ...(md
     ? {
@@ -177,16 +176,22 @@ const Component = styled('span')(({ theme, variant, color, md, sm }: TypographyC
 
 export interface TypographyProps
   extends Omit<TypographyComponentProps, 'theme'>,
-    Omit<React.DetailedHTMLProps<React.HTMLAttributes<HTMLSpanElement>, HTMLSpanElement>, 'color'> {
+    React.DetailedHTMLProps<React.HTMLAttributes<HTMLSpanElement>, HTMLSpanElement> {
   theme?: Theme;
   children?: React.ReactNode;
   as?: React.ElementType<any> | undefined;
 }
 
-const Typography: React.FC<TypographyProps> = ({ color, variant = 'interface-body1', children, ...p }) => {
-  const { ...props } = p;
+const Typography: React.FC<TypographyProps> = ({
+  variant = 'interface-body1',
+  children,
+  className,
+  themeColor,
+  ...props
+}) => {
+  const classNames = [className, `text-${themeColor || 'text'}`].filter(v => v).join(' ') || undefined;
   return (
-    <Component variant={variant} color={color} {...props}>
+    <Component className={classNames} variant={variant} {...props}>
       {children}
     </Component>
   );

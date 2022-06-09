@@ -84,22 +84,27 @@ const semanticColor: Record<ThemeSemanticColorKey, React.CSSProperties['color']>
   warning: colors.yellow[500],
   danger: colors.red[500],
   white: '#fff',
-};
+} as const;
 export type ThemeColorVariant = `${ThemeColorKey}-${ColorVariantKey}`;
 
-const themeColorDic = (Object.keys(colors) as ThemeColorKey[]).reduce((dic, colorKey) => {
-  const colorVariantKeys = Object.keys(colors[colorKey]) as ColorVariantKey[];
-  return {
-    ...dic,
-    ...colorVariantKeys.reduce(
-      (colorDic, colorVariantKey) => ({
-        ...colorDic,
-        [`${colorKey}-${colorVariantKey}`]: colors[colorKey][colorVariantKey],
-      }),
-      {},
-    ),
-  };
+const colorKeys = Object.keys(colors) as ThemeColorKey[];
+const getColorVariantKeys = (key: ThemeColorKey) => Object.keys(colors[key]) as ColorVariantKey[];
+
+export const kebabColors = [
+  ...colorKeys.reduce(
+    (arr: ThemeColorVariant[], key) => [
+      ...arr,
+      ...getColorVariantKeys(key).map<ThemeColorVariant>(vKey => `${key}-${vKey}`),
+    ],
+    [],
+  ),
+];
+const themeColorDic = kebabColors.reduce((obj, kebabKey) => {
+  const [key, variant] = kebabKey.split('-') as [ThemeColorKey, ColorVariantKey];
+  return { ...obj, [kebabKey]: colors[key][variant] };
 }, {}) as Record<ThemeColorVariant, string>;
+
 export const ColorDic = { ...themeColorDic, ...semanticColor };
+export const ColorDicKeys = Object.keys(ColorDic) as (ThemeColorVariant | ThemeSemanticColorKey)[];
 
 export default Object.assign(colors, semanticColor);

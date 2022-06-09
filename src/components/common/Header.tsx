@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from '@emotion/styled';
-import mixins from 'assets/styles/mixins';
+import mixins, { originBreakpoints } from 'assets/styles/mixins';
 import { MdOutlineWbSunny as LightThemeIcon } from 'react-icons/md';
 import { RiMoonFill as DarkThemeIcon } from 'react-icons/ri';
 import { Theme } from 'assets/styles/theme';
@@ -57,6 +57,9 @@ const HeaderComponent = styled('header')(() => ({
   [mixins.breakpoints.md]: {
     height: 400,
   },
+  [mixins.breakpoints.sm]: {
+    height: 320,
+  },
 }));
 
 const HeaderImageWrap = styled('div')(() => ({
@@ -107,16 +110,15 @@ const Header: React.FC<HeaderProps> = ({ isDark, themeChanged }) => {
       <HeaderComponent>
         <HeaderImageWrap>
           <StaticImage
-            style={{ width: '100%', height: '100%' }}
+            css={{ width: '100%', height: '100%' }}
             src="../../assets/images/header-background.jpg"
             alt="header background image"
           />
         </HeaderImageWrap>
         <HeaderTextArea>
           <Typography color="gray-050" variant="headline-h1" md="headline-h2" sm="headline-h3" as="h1">
-            {' '}
             이희현의 <SmSizeBr />
-            제멋대로 블로그{' '}
+            제멋대로 블로그
           </Typography>
           <Typography color="gray-200" variant="subhead-subhead4" md="subhead-subhead6" sm="subhead-subhead8" as="h3">
             The difference <SmSizeBr />

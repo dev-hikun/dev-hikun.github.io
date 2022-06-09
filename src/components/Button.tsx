@@ -1,185 +1,137 @@
 import styled from '@emotion/styled';
 import { Theme } from 'assets/styles/theme';
-import colors, { ThemeColorKey } from 'assets/styles/theme/colors';
-import React from 'react';
+import { ThemeColorKey } from 'assets/styles/theme/colors';
+import React, { useCallback } from 'react';
 
 export type ButtonSize = 'tiny' | 'small' | 'medium' | 'large';
-export type ButtonVariant = 'contained' | 'outlined' | 'link' | 'none';
+export type ButtonVariant = 'contained' | 'outlined' | 'link';
 export type ButtonColorRange = 'backgroundColor' | 'borderColor' | 'text';
 export type ButtonColorStyle = 'primary' | 'text' | 'pressed' | 'hover';
 export type ButtonColor = ThemeColorKey;
 
-const getApplyAttr: Record<ButtonVariant, { [x in ButtonColorRange]?: boolean }> = {
-  contained: {
-    backgroundColor: true,
-  },
-  link: {
-    text: true,
-  },
-  none: {
-    text: true,
-  },
-  outlined: {
-    borderColor: true,
-    text: true,
-  },
+export const variantClass: Record<ButtonVariant, string> = {
+  contained: 'border-0',
+  outlined: 'border-1 border-solid bg-transparent',
+  link: 'border-0',
 };
-const getColor: Record<ButtonColor, { [x in ButtonColorStyle]?: React.CSSProperties['color'] }> = {
+
+export const sizeClass: Record<ButtonSize, string> = {
+  tiny: ['button--tiny', 'px-3', 'py-1'].join(' '),
+  small: ['button--small', 'px-3', 'py-2'].join(' '),
+  medium: ['button--medium', 'p-3'].join(' '),
+  large: ['button--large', 'p-4'].join(' '),
+};
+
+export const colorClass: Record<ButtonColor, Record<ButtonVariant, string>> = {
+  yellow: {
+    contained: ['bg-yellow-500', 'text-gray-900'].join(' '),
+    outlined: ['border-yellow-500', 'text-yellow-500'].join(' '),
+    link: 'text-yellow-500',
+  },
   blue: {
-    primary: colors.blue[400],
-    hover: colors.blue[300],
-    pressed: colors.blue[600],
+    contained: ['bg-blue-500', 'text-white'].join(' '),
+    outlined: ['border-blue-500', 'text-blue-500'].join(' '),
+    link: ['text-blue-500', 'bg-transparent'].join(' '),
   },
   gray: {
-    primary: colors.gray[300],
-    hover: colors.gray[300],
-    pressed: colors.gray[800],
+    contained: ['bg-gray-500', 'text-white'].join(' '),
+    outlined: ['border-gray-500', 'text-gray-500'].join(' '),
+    link: 'text-gray-500',
   },
   green: {
-    primary: colors.green[500],
-    hover: colors.green[400],
-    pressed: colors.green[600],
+    contained: ['bg-green-500', 'text-white'].join(' '),
+    outlined: ['border-green-500', 'text-green-500'].join(' '),
+    link: 'text-green-500',
   },
   purple: {
-    primary: colors.purple[500],
-    hover: colors.purple[400],
-    pressed: colors.purple[600],
+    contained: ['bg-purple-500', 'text-white'].join(' '),
+    outlined: ['border-purple-500', 'text-purple-500'].join(' '),
+    link: 'text-purple-500',
   },
   red: {
-    primary: colors.red[500],
-    hover: colors.red[400],
-    pressed: colors.red[600],
-  },
-  yellow: {
-    primary: colors.yellow[500],
-    hover: colors.yellow[400],
-    pressed: colors.yellow[600],
-    text: colors.gray[900],
+    contained: ['bg-red-500', 'text-white'].join(' '),
+    outlined: ['border-red-500', 'text-red-500'].join(' '),
+    link: 'text-red-500',
   },
 };
 
-const getButtonSize: Record<ButtonSize, React.CSSProperties> = {
-  large: {
-    padding: '16px',
-  },
-  medium: {
-    padding: '12px',
-  },
-  small: {
-    padding: '8px 12px',
-  },
-  tiny: {
-    padding: '4px 12px',
-  },
+export const disabledColorClass: Record<ButtonVariant, string> = {
+  contained: 'text-gray-400 bg-gray-200',
+  link: 'text-gray-400 bg-transparent',
+  outlined: 'text-gray-400 border-gray-200',
 };
 
 interface ButtonComponentProps {
   theme?: Theme;
-  variant?: ButtonVariant;
-  themeColor?: ButtonColor;
+  disabled?: boolean;
   pill?: boolean;
   rounded?: boolean;
-  size?: ButtonSize;
 }
 
 const ButtonComponent = styled('button')(
-  ({
-    theme,
-    variant = 'contained',
-    themeColor = 'blue',
-    pill = false,
-    rounded = true,
-    size = 'medium',
-  }: ButtonComponentProps) => {
-    const isLink = variant === 'link';
-    const isNone = variant === 'none';
-    const isLinkOrNone = isLink || isNone;
-    const { backgroundColor, borderColor, text } = getApplyAttr[variant];
-    const { primary, pressed, hover, text: textColor } = getColor[themeColor];
-
-    return {
-      background: 'transparent',
-      borderWidth: 1,
-      borderStyle: 'solid',
-      borderRadius: rounded ? 8 : pill ? 28 : 3,
-      backgroundColor: backgroundColor ? primary : 'transparent',
-      borderColor: borderColor ? primary : 'transparent',
-      color: textColor ? textColor : text ? primary : theme?.color.white,
-
-      '&:hover': {
-        backgroundColor: backgroundColor ? hover : 'transparent',
-        borderColor: borderColor ? hover : 'transparent',
-        opacity: 0.7,
-        boxShadow: !isLinkOrNone ? '0px 15px 25px -5px rgba(0,0,0,.3)' : undefined,
-        transform: !isLinkOrNone ? 'scale(1.02)' : undefined,
-      },
-
-      '&:active': {
-        backgroundColor: backgroundColor ? pressed : 'transparent',
-        borderColor: borderColor ? pressed : 'transparent',
-        transform: !isLinkOrNone ? 'scale(.98)' : undefined,
-        boxShadow: !isLinkOrNone ? '0px 4px 8px rgba(0,0,0,.2)' : undefined,
-      },
-
-      '&:link': {
-        color: theme?.color.link,
-        textDecoration: 'none',
-      },
-
-      '&:visited': {
-        color: theme?.color.link,
-      },
-
-      '&[href]': {
-        cursor: 'pointer',
-      },
-
-      '&:is(button)': {
-        cursor: 'pointer',
-      },
-
-      ...(isLinkOrNone ? { padding: 0 } : getButtonSize[size]),
-      '&[disabled]': {
-        color: colors.gray[400],
-        background: backgroundColor ? colors.gray[300] : 'transparent',
-        borderColor: borderColor ? colors.gray[300] : 'transparent',
-        '&:link': {
-          color: colors.gray[400],
-        },
-        '&:active': {
-          background: backgroundColor ? colors.gray[300] : 'transparent',
-          borderColor: borderColor ? colors.gray[300] : 'transparent',
-          transform: 'initial',
-          boxShadow: 'initial',
-        },
-        '&:hover': {
-          opacity: 1.0,
-          backgroundColor: backgroundColor ? colors.gray[300] : 'transparent',
-          borderColor: borderColor ? colors.gray[300] : 'transparent',
-        },
-        transform: 'initial',
-        boxShadow: 'initial',
-        cursor: 'not-allowed',
-      },
-    };
-  },
+  ({ pill = false, rounded = true, disabled = false }: ButtonComponentProps) => ({
+    borderRadius: rounded ? 8 : pill ? 28 : 3,
+    display: 'flex',
+    overflow: 'hidden',
+    position: 'relative',
+    outline: 'none',
+    wordBreak: 'keep-all',
+    ...(disabled ? { pointerEvents: 'none', cursor: 'not-allowed' } : {}),
+  }),
 );
 
 type EPButton = React.DetailedHTMLProps<React.ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>;
 type EPAnchor = React.DetailedHTMLProps<React.AnchorHTMLAttributes<HTMLAnchorElement>, HTMLAnchorElement>;
 
 export interface ButtonProps extends ButtonComponentProps, EPButton, Omit<EPAnchor, keyof EPButton> {
+  variant?: ButtonVariant;
+  themeColor?: ButtonColor;
+  size?: ButtonSize;
   children: React.ReactNode;
 }
 
 const Button = React.forwardRef<HTMLAnchorElement & HTMLButtonElement, ButtonProps>(
-  ({ children, variant, disabled, ...props }, ref?: React.Ref<HTMLAnchorElement & HTMLButtonElement>) => {
+  (
+    { variant = 'contained', size = 'medium', themeColor = 'blue', disabled, onClick, className, children, ...props },
+    ref?: React.Ref<HTMLAnchorElement & HTMLButtonElement>,
+  ) => {
+    const onClickButtonComponent = useCallback(
+      (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+        e.preventDefault();
+
+        const button = e.target as HTMLButtonElement;
+        if (button.tagName === 'BUTTON') {
+          const ripple = document.createElement('span');
+          ripple.classList.add('ripple');
+          const x = e.clientX - button.offsetLeft;
+          const y = e.clientY - button.offsetTop;
+          ripple.style.left = `${x}px`;
+          ripple.style.top = `${y}px`;
+          button.appendChild(ripple);
+          setTimeout(() => ripple.remove(), 300);
+        }
+        onClick && onClick(e);
+      },
+      [onClick],
+    );
+
+    const classNames =
+      [
+        className,
+        sizeClass[size],
+        variantClass[variant],
+        disabled ? disabledColorClass[variant] : colorClass[themeColor][variant],
+      ]
+        .filter(v => Boolean(v))
+        .join(' ') || undefined;
+
     return (
       <ButtonComponent
         as={(variant === 'link' && 'a') || undefined}
         ref={ref}
-        variant={variant}
         disabled={disabled}
+        className={classNames}
+        onClick={e => onClickButtonComponent(e)}
         {...props}
       >
         {children}

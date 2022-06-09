@@ -1,21 +1,105 @@
 import { css } from '@emotion/react';
 import { Theme } from 'assets/styles/theme';
-const GlobalStyle = (theme: Theme) => css`
-  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;400;700&display=swap');
-  * {
-    box-sizing: border-box;
-  }
-  html,
-  body,
-  button {
-    margin: 0;
-    padding: 0;
-    font-family: 'Noto Sans KR', serif;
-    font-size: 16px;
-  }
-  body {
-    background-color: ${theme.color.background};
-    color: ${theme.color.text};
-  }
-`;
+import { ColorDic, ColorDicKeys } from '../theme/colors';
+
+const GlobalStyle = (theme: Theme) =>
+  css([
+    `@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;400;700&display=swap');`,
+    `
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body,
+      button {
+        margin: 0;
+        padding: 0;
+        font-family: 'Noto Sans KR', serif;
+        font-size: 16px;
+      }
+      body {
+        background-color: ${theme.color.background || ''};
+        color: ${theme.color.text || ''};
+      }
+      a:link {
+        text-decoration: none;
+      }
+    `,
+    {
+      '.ripple': {
+        position: 'absolute',
+        borderRadius: '50%',
+        backgroundColor: `#0000004C`,
+        width: 100,
+        height: 100,
+        marginTop: -50,
+        marginLeft: -50,
+        animation: 'ripple 1s',
+        opacity: 0,
+      },
+    },
+    Array.from({ length: 100 }, (_, i) => i).reduce(
+      (classes: { [x: string]: any }, i) => ({
+        ...classes,
+        [`.px-${i}`]: {
+          paddingLeft: `${4 * i}px`,
+          paddingRight: `${4 * i}px`,
+        },
+        [`.py-${i}`]: {
+          paddingTop: `${4 * i}px`,
+          paddingBottom: `${4 * i}px`,
+        },
+        [`.px-${i}px`]: {
+          paddingLeft: `${i}px`,
+          paddingRight: `${i}px`,
+        },
+        [`.py-${i}px`]: {
+          paddingTop: `${i}px`,
+          paddingBottom: `${i}px`,
+        },
+        [`.p-${i}`]: {
+          padding: `${4 * i}px`,
+        },
+        [`.p-${i}px`]: {
+          padding: `${i}px`,
+        },
+        [`.border-${i}`]: {
+          borderWidth: `${i}px`,
+        },
+      }),
+      {},
+    ),
+    {
+      '.bg-transparent': { background: 'transparent' },
+      '.border-solid': { borderStyle: 'solid' },
+    },
+    ColorDicKeys.reduce(
+      (colorClasses, key) => ({
+        ...colorClasses,
+        [`.bg-${key}`]: {
+          backgroundColor: ColorDic[key],
+        },
+        [`.text-${key}, .text-${key}:visited, .text-${key}:link`]: {
+          color: ColorDic[key],
+        },
+        [`.border-${key}`]: {
+          borderColor: ColorDic[key],
+        },
+      }),
+      {},
+    ),
+    { '.text-text': { color: theme.color.text } },
+    `
+      @keyframes ripple {
+        from {
+          opacity: 1;
+          transform: scale(0);
+        }
+        to {
+          opacity: 0;
+          transform: scale(10);
+        }
+    `,
+  ]);
+
 export default GlobalStyle;

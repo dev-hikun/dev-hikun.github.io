@@ -21,7 +21,7 @@ interface ThemeGroup {
 export const light: Theme = {
   color: {
     background: ColorDic['gray-100'],
-    text: ColorDic['gray-700'],
+    text: ColorDic['gray-900'],
     link: ColorDic['blue-500'],
     ...colors,
   },
@@ -36,7 +36,7 @@ export const light: Theme = {
 export const dark: Theme = {
   color: {
     ...light.color,
-    text: colors.gray[200],
+    text: colors.white,
     background: colors.gray[900],
   },
   size: {
