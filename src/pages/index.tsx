@@ -9,4 +9,14 @@ const indexPage: React.FC = WithThemes(() => (
     <Text text={`Hello Gatsby`} />
   </>
 ));
+
+export async function getServerData() {
+  await new Promise(resolve => {
+    console.log('server side rendering');
+    resolve(undefined);
+  });
+  return {
+    props: {},
+  };
+}
 export default indexPage;

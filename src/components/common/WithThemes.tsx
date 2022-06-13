@@ -18,11 +18,4 @@ function WithThemes<T>(Component: React.FC<T>) {
     );
   };
 }
-
-export async function getServerData() {
-  await new Promise(resolve => {
-    console.log('server side rendering');
-    resolve(undefined);
-  });
-}
 export default WithThemes;
