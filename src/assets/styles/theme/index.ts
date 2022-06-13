@@ -24,7 +24,7 @@ export const light: Theme = {
     text: ColorDic['gray-900'],
     link: ColorDic['blue-500'],
     hr: ColorDic['gray-200'],
-    navBackground: ColorDic['white-70'],
+    navBackground: ColorDic['white-90'],
     ...colors,
   },
   size: {
@@ -40,7 +40,7 @@ export const dark: Theme = {
     ...light.color,
     text: ColorDic['gray-050'],
     background: colors.gray[900],
-    navBackground: ColorDic['black-50'],
+    navBackground: ColorDic['black-90'],
     hr: ColorDic['gray-700'],
   },
   size: {
