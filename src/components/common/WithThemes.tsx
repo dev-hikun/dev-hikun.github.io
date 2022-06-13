@@ -8,12 +8,10 @@ import 'assets/styles/globals/index.css';
 function WithThemes<T>(Component: React.FC<T>) {
   return (props: React.ComponentProps<React.FC<T>>) => {
     const [isDarkMode, setDarkMode] = useTheme();
-    const mode = isDarkMode ? 'dark' : 'light';
-
     return (
       <BlogSettingsContext.Provider value={{ isDarkMode, setDarkMode }}>
-        <ThemeProvider theme={THEME[mode]}>
-          <Global styles={GlobalStyle(THEME[mode])} />
+        <ThemeProvider theme={THEME[isDarkMode ? 'dark' : 'light']}>
+          <Global styles={GlobalStyle} />
           <Component {...props} />
         </ThemeProvider>
       </BlogSettingsContext.Provider>

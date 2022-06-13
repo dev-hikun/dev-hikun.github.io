@@ -1,10 +1,28 @@
 import { css } from '@emotion/react';
-import { Theme } from 'assets/styles/theme';
+import theme, { Theme } from 'assets/styles/theme';
 import { ColorDic, ColorDicKeys } from '../theme/colors';
+const dark = theme['dark'];
+const light = theme['light'];
 
-const GlobalStyle = (theme: Theme) =>
-  css([
-    `
+const colorByTheme = (theme: Theme) => `
+  --background-color: ${theme.color.background || ''};
+  --nav-background-color: ${theme.color.navBackground || ''};
+  --text-color: ${theme.color.text || ''};
+  --hr-color: ${theme.color.hr || ''};
+  .text-text: { color: ${theme.color.text || ''} };
+`;
+
+const GlobalStyle = css([
+  `
+      :root {
+        ${colorByTheme(light)}
+        ${ColorDicKeys.map(key => `--${key}: ${ColorDic[key] || ''}`).join(';')}
+      }
+      [data-theme="dark"] {
+        ${colorByTheme(dark)}
+      }
+    `,
+  `
       * {
         box-sizing: border-box;
       }
@@ -15,102 +33,93 @@ const GlobalStyle = (theme: Theme) =>
         font-size: 16px;
       }
       body {
-        background-color: ${theme.color.background || ''};
-        color: ${theme.color.text || ''};
+        background-color: var(--background-color);
+        color: var(--text-color);
       }
       a:link {
         text-decoration: none;
       }
     `,
-    `
-      :root {
-        --background-color: ${theme.color.background || ''};
-        --nav-background-color: ${theme.color.navBackground || ''};
-        --text-color: ${theme.color.text || ''};
-        --hr-color: ${theme.color.hr || ''};
-        ${ColorDicKeys.map(key => `--${key}: ${ColorDic[key] || ''}`).join(';')}
-      }
-    `,
-    {
-      '.ripple': {
-        position: 'absolute',
-        borderRadius: '50%',
-        backgroundColor: `#0000004C`,
-        width: 100,
-        height: 100,
-        marginTop: -50,
-        marginLeft: -50,
-        animation: 'ripple 1s',
-        opacity: 0,
+  {
+    '.ripple': {
+      position: 'absolute',
+      borderRadius: '50%',
+      backgroundColor: `#0000004C`,
+      width: 100,
+      height: 100,
+      marginTop: -50,
+      marginLeft: -50,
+      animation: 'ripple 1s',
+      opacity: 1,
+      zIndex: 99999,
+    },
+  },
+  Array.from({ length: 100 }, (_, i) => i).reduce(
+    (classes: { [x: string]: any }, i) => ({
+      ...classes,
+      [`.px-${i}`]: {
+        paddingLeft: `${4 * i}px`,
+        paddingRight: `${4 * i}px`,
       },
-    },
-    Array.from({ length: 100 }, (_, i) => i).reduce(
-      (classes: { [x: string]: any }, i) => ({
-        ...classes,
-        [`.px-${i}`]: {
-          paddingLeft: `${4 * i}px`,
-          paddingRight: `${4 * i}px`,
+      [`.py-${i}`]: {
+        paddingTop: `${4 * i}px`,
+        paddingBottom: `${4 * i}px`,
+        [`&.button--outlined`]: {
+          paddingTop: `${4 * i - 1}px`,
+          paddingBottom: `${4 * i - 1}px`,
         },
-        [`.py-${i}`]: {
-          paddingTop: `${4 * i}px`,
-          paddingBottom: `${4 * i}px`,
-          [`&.button--outlined`]: {
-            paddingTop: `${4 * i - 1}px`,
-            paddingBottom: `${4 * i - 1}px`,
+      },
+      [`.px-${i}px`]: {
+        paddingLeft: `${i}px`,
+        paddingRight: `${i}px`,
+      },
+      [`.py-${i}px`]: {
+        paddingTop: `${i}px`,
+        paddingBottom: `${i}px`,
+      },
+      [`.p-${i}`]: {
+        padding: `${4 * i}px`,
+      },
+      [`.p-${i}px`]: {
+        padding: `${i}px`,
+      },
+      [`.border-${i}`]: {
+        borderWidth: `${i}px`,
+      },
+    }),
+    {},
+  ),
+  ColorDicKeys.reduce(
+    (colorClasses, key) => ({
+      ...colorClasses,
+      ...['', 'hover', 'active'].reduce((classes, selector) => {
+        return {
+          ...classes,
+          [`.${selector ? `${selector}\\:` : ''}bg-${key}${selector ? `:${selector}` : ''}`]: {
+            backgroundColor: ColorDic[key],
           },
+        };
+      }, {}),
+      [`.text-${key}, .text-${key}:visited, .text-${key}:link, .hover\\:text-${key}:hover .active\\:text-${key}:active`]:
+        {
+          color: ColorDic[key],
         },
-        [`.px-${i}px`]: {
-          paddingLeft: `${i}px`,
-          paddingRight: `${i}px`,
-        },
-        [`.py-${i}px`]: {
-          paddingTop: `${i}px`,
-          paddingBottom: `${i}px`,
-        },
-        [`.p-${i}`]: {
-          padding: `${4 * i}px`,
-        },
-        [`.p-${i}px`]: {
-          padding: `${i}px`,
-        },
-        [`.border-${i}`]: {
-          borderWidth: `${i}px`,
-        },
-      }),
-      {},
-    ),
-    ColorDicKeys.reduce(
-      (colorClasses, key) => ({
-        ...colorClasses,
-        ...['', 'hover', 'active'].reduce((classes, selector) => {
-          return {
-            ...classes,
-            [`.${selector ? `${selector}\\:` : ''}bg-${key}${selector ? `:${selector}` : ''}`]: {
-              backgroundColor: ColorDic[key],
-            },
-          };
-        }, {}),
-        [`.text-${key}, .text-${key}:visited, .text-${key}:link, .hover\\:text-${key}:hover .active\\:text-${key}:active`]:
-          {
-            color: ColorDic[key],
+      ...['', 'hover', 'active'].reduce((classes, selector) => {
+        return {
+          ...classes,
+          [`.${selector ? `${selector}\\:` : ''}border-${key}${selector ? `:${selector}` : ''}`]: {
+            borderColor: ColorDic[key],
           },
-        ...['', 'hover', 'active'].reduce((classes, selector) => {
-          return {
-            ...classes,
-            [`.${selector ? `${selector}\\:` : ''}border-${key}${selector ? `:${selector}` : ''}`]: {
-              borderColor: ColorDic[key],
-            },
-          };
-        }, {}),
-      }),
-      {},
-    ),
-    {
-      '.bg-transparent': { background: 'transparent' },
-      '.border-solid': { borderStyle: 'solid' },
-      '.text-text': { color: theme.color.text },
-    },
-    `
+        };
+      }, {}),
+    }),
+    {},
+  ),
+  {
+    '.bg-transparent': { background: 'transparent' },
+    '.border-solid': { borderStyle: 'solid' },
+  },
+  `
       @keyframes ripple {
         from {
           opacity: 1;
@@ -121,5 +130,5 @@ const GlobalStyle = (theme: Theme) =>
           transform: scale(10);
         }
     `,
-  ]);
+]);
 export default GlobalStyle;

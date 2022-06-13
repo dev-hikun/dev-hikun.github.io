@@ -47,6 +47,10 @@ const useBlogSettings = (): [typeof isDarkMode, typeof setDarkMode] => {
         manualDarkMode: isDarkMode,
       }),
     );
+    if (!document) return;
+    const wrapper = document.querySelector('body');
+    if (isDarkMode) wrapper?.setAttribute('data-theme', 'dark');
+    else wrapper?.removeAttribute('data-theme');
   };
   return [isDarkMode, setDarkMode];
 };
