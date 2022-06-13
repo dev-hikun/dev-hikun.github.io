@@ -110,26 +110,22 @@ const MenuItem = styled('li')(() => ({
 
   [mixins.breakpoints.md]: {
     width: '100%',
-    padding: '5px 10px',
-    borderBottom: '1px solid var(--hr-color)',
+    padding: '8px 10px',
     backgroundColor: 'var(--nav-background-color)',
-    ['&:first-of-type']: {
-      borderTop: '1px solid var(--hr-color)',
-    },
 
     a: {
       display: 'block',
-      padding: '8px 10px',
+      padding: '5px 10px',
       span: {
         color: 'var(--text-color)',
       },
       '&:hover': {
         span: {
-          color: 'var(--text-color)',
+          color: 'var(--white-100)',
         },
         borderBottom: 0,
         borderRadius: 10,
-        backdropFilter: 'contrast(0.8)',
+        backgroundColor: 'var(--info)',
       },
     },
   },

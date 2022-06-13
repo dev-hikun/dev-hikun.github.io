@@ -6,6 +6,7 @@ import Typography from 'components/Typography';
 import useUtils from 'hooks/useUtils';
 import { Theme } from 'assets/styles/theme';
 import Navigation from 'components/common/Header/Navigation';
+import SmSizeBr from 'components/common/SmSizeBr';
 
 type HeaderComponentProps = { theme: Theme };
 const HeaderComponent = styled('header')(() => ({
@@ -51,20 +52,30 @@ const HeaderTextArea = styled('div')(({ theme }: HeaderComponentProps) => ({
   },
 }));
 
-const SmSizeBr = styled('br')(() => ({
-  display: 'none',
-  [mixins.breakpoints.sm]: {
-    display: 'initial',
-  },
-}));
-
 interface HeaderProps {
+  title?: React.ReactNode;
+  description?: React.ReactNode;
   navigationClassName?: string;
   headerClassName?: string;
 }
 
-const Header: React.FC<HeaderProps> = ({ navigationClassName = '', headerClassName = '' }) => {
+const Header: React.FC<HeaderProps> = ({ navigationClassName = '', headerClassName = '', ...props }) => {
   const { useClassName } = useUtils();
+  const {
+    title = (
+      <>
+        이희현의 <SmSizeBr />
+        제멋대로 블로그
+      </>
+    ),
+    description = (
+      <>
+        The difference <SmSizeBr />
+        between a dream and a goal <SmSizeBr />
+        is a plan
+      </>
+    ),
+  } = props;
 
   return (
     <>
@@ -80,8 +91,7 @@ const Header: React.FC<HeaderProps> = ({ navigationClassName = '', headerClassNa
         </HeaderImageWrap>
         <HeaderTextArea>
           <Typography themeColor="gray-100" variant="headline-h1" md="headline-h2" sm="headline-h3" as="h1">
-            이희현의 <SmSizeBr />
-            제멋대로 블로그
+            {title}
           </Typography>
           <Typography
             themeColor="gray-300"
@@ -90,9 +100,7 @@ const Header: React.FC<HeaderProps> = ({ navigationClassName = '', headerClassNa
             sm="subhead-subhead8"
             as="h3"
           >
-            The difference <SmSizeBr />
-            between a dream and a goal <SmSizeBr />
-            is a plan
+            {description}
           </Typography>
         </HeaderTextArea>
       </HeaderComponent>
