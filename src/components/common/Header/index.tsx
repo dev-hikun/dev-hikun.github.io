@@ -84,7 +84,7 @@ const Header: React.FC<HeaderProps> = ({ navigationClassName = '', headerClassNa
         <HeaderImageWrap>
           <StaticImage
             css={{ width: '100%', height: '100%' }}
-            src="../../assets/images/header-background.jpg"
+            src="../../../assets/images/header-background.jpg"
             layout="fullWidth"
             alt="header background image"
           />

@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useCallback, useEffect } from 'react';
 
 const SETTING_KEY = 'dev-hikun-blog';
 type BlogSettings = { systemDarkMode?: boolean; manualDarkMode?: boolean };
@@ -47,11 +47,15 @@ const useBlogSettings = (): [typeof isDarkMode, typeof setDarkMode] => {
         manualDarkMode: isDarkMode,
       }),
     );
+  };
+
+  useEffect(() => {
     if (!document) return;
     const wrapper = document.querySelector('body');
     if (isDarkMode) wrapper?.setAttribute('data-theme', 'dark');
     else wrapper?.removeAttribute('data-theme');
-  };
+  }, [isDarkMode]);
+
   return [isDarkMode, setDarkMode];
 };
 
