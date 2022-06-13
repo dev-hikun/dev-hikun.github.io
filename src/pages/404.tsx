@@ -1,4 +1,4 @@
-import WithThemes from 'components/common/withThemes';
+import WithThemes from 'components/common/WithThemes';
 import React from 'react';
 
 const NotFoundPage = () => (

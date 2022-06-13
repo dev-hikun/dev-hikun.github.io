@@ -4,7 +4,6 @@ import { ColorDic, ColorDicKeys } from '../theme/colors';
 
 const GlobalStyle = (theme: Theme) =>
   css([
-    `@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;400;700&display=swap');`,
     `
       * {
         box-sizing: border-box;
@@ -48,6 +47,10 @@ const GlobalStyle = (theme: Theme) =>
         [`.py-${i}`]: {
           paddingTop: `${4 * i}px`,
           paddingBottom: `${4 * i}px`,
+          [`&.button--outlined`]: {
+            paddingTop: `${4 * i - 1}px`,
+            paddingBottom: `${4 * i - 1}px`,
+          },
         },
         [`.px-${i}px`]: {
           paddingLeft: `${i}px`,
@@ -69,26 +72,37 @@ const GlobalStyle = (theme: Theme) =>
       }),
       {},
     ),
-    {
-      '.bg-transparent': { background: 'transparent' },
-      '.border-solid': { borderStyle: 'solid' },
-    },
     ColorDicKeys.reduce(
       (colorClasses, key) => ({
         ...colorClasses,
-        [`.bg-${key}`]: {
-          backgroundColor: ColorDic[key],
-        },
-        [`.text-${key}, .text-${key}:visited, .text-${key}:link`]: {
-          color: ColorDic[key],
-        },
-        [`.border-${key}`]: {
-          borderColor: ColorDic[key],
-        },
+        ...['', 'hover', 'active'].reduce((classes, selector) => {
+          return {
+            ...classes,
+            [`.${selector ? `${selector}\\:` : ''}bg-${key}${selector ? `:${selector}` : ''}`]: {
+              backgroundColor: ColorDic[key],
+            },
+          };
+        }, {}),
+        [`.text-${key}, .text-${key}:visited, .text-${key}:link, .hover\\:text-${key}:hover .active\\:text-${key}:active`]:
+          {
+            color: ColorDic[key],
+          },
+        ...['', 'hover', 'active'].reduce((classes, selector) => {
+          return {
+            ...classes,
+            [`.${selector ? `${selector}\\:` : ''}border-${key}${selector ? `:${selector}` : ''}`]: {
+              borderColor: ColorDic[key],
+            },
+          };
+        }, {}),
       }),
       {},
     ),
-    { '.text-text': { color: theme.color.text } },
+    {
+      '.bg-transparent': { background: 'transparent' },
+      '.border-solid': { borderStyle: 'solid' },
+      '.text-text': { color: theme.color.text },
+    },
     `
       @keyframes ripple {
         from {
@@ -101,5 +115,4 @@ const GlobalStyle = (theme: Theme) =>
         }
     `,
   ]);
-
 export default GlobalStyle;

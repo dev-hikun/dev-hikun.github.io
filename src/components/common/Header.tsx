@@ -1,15 +1,14 @@
-import React from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import styled from '@emotion/styled';
-import mixins, { originBreakpoints } from 'assets/styles/mixins';
+import mixins from 'assets/styles/mixins';
 import { MdOutlineWbSunny as LightThemeIcon } from 'react-icons/md';
 import { RiMoonFill as DarkThemeIcon } from 'react-icons/ri';
 import { Theme } from 'assets/styles/theme';
 import { StaticImage } from 'gatsby-plugin-image';
 import Typography from 'components/Typography';
-interface HeaderProps {
-  themeChanged?: () => void;
-  isDark: boolean;
-}
+import Button from 'components/Button';
+import useUtils from 'hooks/useUtils';
+import { useBlogSettingsContext } from 'contexts';
 
 type NavigationProps = {
   theme: Theme;
@@ -80,12 +79,15 @@ const HeaderImageWrap = styled('div')(() => ({
 const HeaderTextArea = styled('div')(({ theme }: NavigationProps) => ({
   width: theme.size.siteWidth,
   margin: '0 auto',
-  padding: '15rem 20px 0',
+  padding: '25rem 100px 0',
   position: 'relative',
   zIndex: 3,
   color: theme.color.gray['050'],
   [mixins.breakpoints.md]: {
-    padding: '12rem 20px 0',
+    padding: '15rem 20px 0',
+  },
+  [mixins.breakpoints.sm]: {
+    padding: '7.5rem 20px 0',
   },
 }));
 
@@ -96,31 +98,65 @@ const SmSizeBr = styled('br')(() => ({
   },
 }));
 
-const Header: React.FC<HeaderProps> = ({ isDark, themeChanged }) => {
+interface HeaderProps {
+  navigationClassName?: string;
+  headerClassName?: string;
+}
+
+const Header: React.FC<HeaderProps> = ({ navigationClassName = '', headerClassName = '' }) => {
+  const { isDarkMode, setDarkMode } = useBlogSettingsContext();
+  const { useClassName } = useUtils();
+  const [isTop, setIsTop] = useState(true);
+  const handleFollow = useCallback(() => {
+    if (!window) return;
+    if (window.scrollY > 0) setIsTop(true);
+    else setIsTop(false);
+  }, [window]);
+
+  useEffect(() => {
+    window?.addEventListener('scroll', handleFollow);
+    return () => {
+      window?.removeEventListener('scroll', handleFollow);
+    };
+  }, []);
+
   return (
     <>
       <Navigation>
-        <NaviWrap>
+        <NaviWrap className={useClassName([navigationClassName, isTop ? 'is-top' : ''])}>
           <span>이희현</span>
-          <button className="toggleButton" onClick={themeChanged}>
-            {isDark ? <LightThemeIcon /> : <DarkThemeIcon />}
-          </button>
+          <Button
+            variant="none"
+            themeColor="gray"
+            size="tiny"
+            className="toggleButton"
+            onClick={() => setDarkMode && setDarkMode(!isDarkMode)}
+          >
+            {isDarkMode ? <LightThemeIcon /> : <DarkThemeIcon />}
+          </Button>
         </NaviWrap>
       </Navigation>
-      <HeaderComponent>
+      <HeaderComponent className={useClassName([headerClassName])}>
         <HeaderImageWrap>
           <StaticImage
             css={{ width: '100%', height: '100%' }}
             src="../../assets/images/header-background.jpg"
+            layout="fullWidth"
             alt="header background image"
           />
         </HeaderImageWrap>
         <HeaderTextArea>
-          <Typography color="gray-050" variant="headline-h1" md="headline-h2" sm="headline-h3" as="h1">
+          <Typography themeColor="gray-100" variant="headline-h1" md="headline-h2" sm="headline-h3" as="h1">
             이희현의 <SmSizeBr />
             제멋대로 블로그
           </Typography>
-          <Typography color="gray-200" variant="subhead-subhead4" md="subhead-subhead6" sm="subhead-subhead8" as="h3">
+          <Typography
+            themeColor="gray-300"
+            variant="subhead-subhead4"
+            md="subhead-subhead6"
+            sm="subhead-subhead8"
+            as="h3"
+          >
             The difference <SmSizeBr />
             between a dream and a goal <SmSizeBr />
             is a plan

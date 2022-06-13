@@ -1,7 +1,7 @@
 import Button from 'components/Button';
 import Typography from 'components/Typography';
 import React from 'react';
-import WithThemes from 'components/common/withThemes';
+import WithThemes from 'components/common/WithThemes';
 import THEME from 'assets/styles/theme';
 
 const ButtonTestScreen: React.FC = () => {
@@ -12,7 +12,7 @@ const ButtonTestScreen: React.FC = () => {
           <ul
             key={str}
             css={{
-              backgroundColor: str === 'dark' ? 'black' : 'white',
+              backgroundColor: str === 'dark' ? 'black' : 'tranparent',
               padding: 0,
               margin: 0,
               '& > li': {
