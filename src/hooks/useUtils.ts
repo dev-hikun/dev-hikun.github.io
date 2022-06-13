@@ -18,11 +18,11 @@ const useThrottle = () => {
   return throttle;
 };
 
-const utils = () => {
-  const useClassName = useCallback((classNames: string[]) => {
+const useUtils = () => {
+  const useClassName = useCallback((classNames: (string | undefined | boolean)[]) => {
     return classNames.filter(a => a).join(' ') || undefined;
   }, []);
 
   return { useClassName, useThrottle };
 };
-export default utils;
+export default useUtils;
