@@ -14,13 +14,10 @@ const useBlogSettings = (): [typeof isDarkMode, typeof setDarkMode] => {
     // 시스템 다크모드가 활성화 되어 있는지
     const { matches: systemDarkMode } = window.matchMedia('(prefers-color-scheme: dark)');
     // 로컬 스토리지에 저장된 값이 있다면 불러오고, 없다면 초기값을 설정
-    const savedSettingsString = window.localStorage.getItem(SETTING_KEY) || '{}';
-    console.log(savedSettingsString);
-    const savedSettings = JSON.parse(savedSettingsString) as BlogSettings;
-
+    const savedSettings = JSON.parse(window.localStorage.getItem(SETTING_KEY) || '{}') as BlogSettings;
     // 빈 객체면 manualDarkMode 초기화
     // 시스템 다크모드는 항상 최신으로 갱신
-    if (typeof savedSettings.systemDarkMode !== 'boolean') {
+    if (typeof savedSettings.manualDarkMode !== 'boolean') {
       return {
         manualDarkMode: undefined,
         systemDarkMode,

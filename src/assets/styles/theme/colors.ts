@@ -1,7 +1,38 @@
 import React from 'react';
 
 export type ColorVariantKey = '050' | '100' | '200' | '300' | '400' | '500' | '600' | '700' | '800' | '900';
+export type AlphaVaraintKey = '10' | '20' | '30' | '40' | '50' | '60' | '70' | '80' | '90' | '100';
 export type ThemeColorKey = 'gray' | 'blue' | 'red' | 'green' | 'yellow' | 'purple';
+export type GrayscaleKey = 'white' | 'black';
+export type ThemeColorVariant = `${ThemeColorKey}-${ColorVariantKey}`;
+export type GrayscaleVaraint = `${GrayscaleKey}-${AlphaVaraintKey}`;
+const grayscale: Record<GrayscaleKey, Record<AlphaVaraintKey, React.CSSProperties['color']>> = {
+  white: {
+    10: 'rgba(255, 255, 255, 0.1)',
+    20: 'rgba(255, 255, 255, 0.2)',
+    30: 'rgba(255, 255, 255, 0.3)',
+    40: 'rgba(255, 255, 255, 0.4)',
+    50: 'rgba(255, 255, 255, 0.5)',
+    60: 'rgba(255, 255, 255, 0.6)',
+    70: 'rgba(255, 255, 255, 0.7)',
+    80: 'rgba(255, 255, 255, 0.8)',
+    90: 'rgba(255, 255, 255, 0.9)',
+    100: '#fff',
+  },
+  black: {
+    10: 'rgba(0, 0, 0, 0.1)',
+    20: 'rgba(0, 0, 0, 0.2)',
+    30: 'rgba(0, 0, 0, 0.3)',
+    40: 'rgba(0, 0, 0, 0.4)',
+    50: 'rgba(0, 0, 0, 0.5)',
+    60: 'rgba(0, 0, 0, 0.6)',
+    70: 'rgba(0, 0, 0, 0.7)',
+    80: 'rgba(0, 0, 0, 0.8)',
+    90: 'rgba(0, 0, 0, 0.9)',
+    100: '#000',
+  },
+};
+
 const colors: Record<ThemeColorKey, Record<ColorVariantKey, React.CSSProperties['color']>> = {
   gray: {
     '050': '#FDFDFD',
@@ -85,26 +116,37 @@ const semanticColor: Record<ThemeSemanticColorKey, React.CSSProperties['color']>
   danger: colors.red[500],
   white: '#fff',
 } as const;
-export type ThemeColorVariant = `${ThemeColorKey}-${ColorVariantKey}`;
 
 const colorKeys = Object.keys(colors) as ThemeColorKey[];
 const getColorVariantKeys = (key: ThemeColorKey) => Object.keys(colors[key]) as ColorVariantKey[];
+const getGrayscaleVaraintKeys = (key: GrayscaleKey) => Object.keys(grayscale[key]) as AlphaVaraintKey[];
+const kebabColors = colorKeys.reduce(
+  (arr: ThemeColorVariant[], key) => [
+    ...arr,
+    ...getColorVariantKeys(key).map<ThemeColorVariant>(vKey => `${key}-${vKey}`),
+  ],
+  [],
+);
 
-export const kebabColors = [
-  ...colorKeys.reduce(
-    (arr: ThemeColorVariant[], key) => [
-      ...arr,
-      ...getColorVariantKeys(key).map<ThemeColorVariant>(vKey => `${key}-${vKey}`),
-    ],
-    [],
-  ),
-];
 const themeColorDic = kebabColors.reduce((obj, kebabKey) => {
   const [key, variant] = kebabKey.split('-') as [ThemeColorKey, ColorVariantKey];
   return { ...obj, [kebabKey]: colors[key][variant] };
 }, {}) as Record<ThemeColorVariant, string>;
 
-export const ColorDic = { ...themeColorDic, ...semanticColor };
-export const ColorDicKeys = Object.keys(ColorDic) as (ThemeColorVariant | ThemeSemanticColorKey)[];
+const kebabGrayScales = (Object.keys(grayscale) as Array<GrayscaleKey>).reduce(
+  (arr: GrayscaleVaraint[], key) => [
+    ...arr,
+    ...getGrayscaleVaraintKeys(key).map<GrayscaleVaraint>(vKey => `${key}-${vKey}`),
+  ],
+  [],
+);
 
-export default Object.assign(colors, semanticColor);
+const grayscaleDic = kebabGrayScales.reduce((obj, kebabKey) => {
+  const [key, variant] = kebabKey.split('-') as [GrayscaleKey, AlphaVaraintKey];
+  return { ...obj, [kebabKey]: grayscale[key][variant] };
+}, {}) as Record<GrayscaleVaraint, string>;
+
+export const ColorDic = { ...themeColorDic, ...semanticColor, ...grayscaleDic };
+export const ColorDicKeys = Object.keys(ColorDic) as (keyof typeof ColorDic)[];
+
+export default Object.assign(colors, semanticColor, grayscale);

@@ -39,10 +39,10 @@ const HeaderImageWrap = styled('div')(() => ({
 const HeaderTextArea = styled('div')(({ theme }: HeaderComponentProps) => ({
   width: theme.size.siteWidth,
   margin: '0 auto',
-  padding: '25rem 100px 0',
+  padding: '25rem 20px 0',
   position: 'relative',
   zIndex: 3,
-  color: theme.color.gray['050'],
+  color: 'var(--gray-050)',
   [mixins.breakpoints.md]: {
     padding: '15rem 20px 0',
   },

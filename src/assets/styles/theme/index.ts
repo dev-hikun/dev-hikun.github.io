@@ -1,7 +1,7 @@
 import React from 'react';
 import colors, { ColorDic } from './colors';
 
-type AdditinalColorKey = 'background' | 'text' | 'link';
+type AdditinalColorKey = 'background' | 'text' | 'link' | 'hr' | 'navBackground';
 export interface Theme {
   color: Record<AdditinalColorKey, React.CSSProperties['color']> & typeof colors;
   size: {
@@ -20,9 +20,11 @@ interface ThemeGroup {
  */
 export const light: Theme = {
   color: {
-    background: ColorDic['gray-100'],
+    background: ColorDic['gray-050'],
     text: ColorDic['gray-900'],
     link: ColorDic['blue-500'],
+    hr: ColorDic['gray-200'],
+    navBackground: ColorDic['white-70'],
     ...colors,
   },
   size: {
@@ -36,8 +38,10 @@ export const light: Theme = {
 export const dark: Theme = {
   color: {
     ...light.color,
-    text: colors.white,
+    text: ColorDic['gray-050'],
     background: colors.gray[900],
+    navBackground: ColorDic['black-50'],
+    hr: ColorDic['gray-700'],
   },
   size: {
     ...light.size,

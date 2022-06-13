@@ -3,6 +3,7 @@ import styled from '@emotion/styled';
 import { ThemeColorVariant, ThemeSemanticColorKey } from 'assets/styles/theme/colors';
 import mixins from 'assets/styles/mixins';
 import { Theme } from 'assets/styles/theme';
+import useUtils from 'hooks/useUtils';
 
 const typographyVariantDict = {
   headline: ['h1', 'h2', 'h3', 'h4', 'h5'] as const,
@@ -150,29 +151,31 @@ const typographyStyleDic: Record<TypographyVariant, React.CSSProperties> = {
 
 interface TypographyComponentProps {
   theme?: Theme;
-  variant: TypographyVariant;
+  variant?: TypographyVariant;
   themeColor?: ThemeSemanticColorKey | ThemeColorVariant;
   md?: TypographyVariant;
   sm?: TypographyVariant;
 }
 
-const Component = styled('span')(({ variant, md, sm }: TypographyComponentProps) => ({
-  ...typographyStyleDic[variant],
-  ...(md
-    ? {
-        [mixins.breakpoints.md]: {
-          ...typographyStyleDic[md],
-        },
-      }
-    : null),
-  ...(sm
-    ? {
-        [mixins.breakpoints.sm]: {
-          ...typographyStyleDic[sm],
-        },
-      }
-    : null),
-}));
+const TypographyComponent = styled('span')(({ variant = 'interface-body1', md, sm }: TypographyComponentProps) => {
+  return {
+    ...typographyStyleDic[variant],
+    ...(md
+      ? {
+          [mixins.breakpoints.md]: {
+            ...typographyStyleDic[md],
+          },
+        }
+      : null),
+    ...(sm
+      ? {
+          [mixins.breakpoints.sm]: {
+            ...typographyStyleDic[sm],
+          },
+        }
+      : null),
+  };
+});
 
 export interface TypographyProps
   extends Omit<TypographyComponentProps, 'theme'>,
@@ -182,18 +185,12 @@ export interface TypographyProps
   as?: React.ElementType<any> | undefined;
 }
 
-const Typography: React.FC<TypographyProps> = ({
-  variant = 'interface-body1',
-  children,
-  className,
-  themeColor,
-  ...props
-}) => {
-  const classNames = [className, `text-${themeColor || 'text'}`].filter(v => v).join(' ') || undefined;
+const Typography: React.FC<TypographyProps> = ({ variant, children, className, themeColor, ...props }) => {
+  const { useClassName } = useUtils();
   return (
-    <Component className={classNames} variant={variant} {...props}>
+    <TypographyComponent className={useClassName([className, themeColor])} variant={variant} {...props}>
       {children}
-    </Component>
+    </TypographyComponent>
   );
 };
 export default Typography;

@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { Theme } from 'assets/styles/theme';
-import { ThemeColorKey } from 'assets/styles/theme/colors';
+import { ThemeColorKey, ThemeSemanticColorKey } from 'assets/styles/theme/colors';
 import React, { useCallback } from 'react';
 
 export type ButtonSize = 'tiny' | 'small' | 'medium' | 'large';
@@ -109,6 +109,7 @@ const ButtonComponent = styled('button')(({ pill = false, rounded = true }: Butt
   position: 'relative',
   outline: 'none',
   wordBreak: 'keep-all',
+  color: 'var(--text-color)',
   '&:not(a, [disabled])': {
     cursor: 'pointer',
   },
@@ -136,8 +137,9 @@ const Button = React.forwardRef<HTMLAnchorElement & HTMLButtonElement, ButtonPro
       (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         e.preventDefault();
 
-        const button = e.target as HTMLButtonElement;
-        if (button.tagName === 'BUTTON') {
+        const element = e.target as HTMLElement;
+        const button = element.closest('button');
+        if (button) {
           const ripple = document.createElement('span');
           ripple.classList.add('ripple');
           const x = e.clientX - button.offsetLeft;

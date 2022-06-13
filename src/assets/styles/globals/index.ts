@@ -8,9 +8,7 @@ const GlobalStyle = (theme: Theme) =>
       * {
         box-sizing: border-box;
       }
-      html,
-      body,
-      button {
+      html, body, button, ul {
         margin: 0;
         padding: 0;
         font-family: 'Noto Sans KR', serif;
@@ -22,6 +20,15 @@ const GlobalStyle = (theme: Theme) =>
       }
       a:link {
         text-decoration: none;
+      }
+    `,
+    `
+      :root {
+        --background-color: ${theme.color.background || ''};
+        --nav-background-color: ${theme.color.navBackground || ''};
+        --text-color: ${theme.color.text || ''};
+        --hr-color: ${theme.color.hr || ''};
+        ${ColorDicKeys.map(key => `--${key}: ${ColorDic[key] || ''}`).join(';')}
       }
     `,
     {
