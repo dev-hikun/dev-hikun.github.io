@@ -4,7 +4,7 @@ const SETTING_KEY = 'dev-hikun-blog';
 type BlogSettings = { systemDarkMode?: boolean; manualDarkMode?: boolean };
 const useBlogSettings = (): [typeof isDarkMode, typeof setDarkMode] => {
   const [settings, setSettings] = useState<BlogSettings>(() => {
-    if (!window) {
+    if (typeof window === 'undefined') {
       return {
         manualDarkMode: undefined,
         systemDarkMode: false,
