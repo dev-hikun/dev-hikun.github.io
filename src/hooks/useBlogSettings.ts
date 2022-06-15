@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useCallback, useEffect } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 
 const SETTING_KEY = 'dev-hikun-blog';
 type BlogSettings = { systemDarkMode?: boolean; manualDarkMode?: boolean };
@@ -36,15 +36,17 @@ const useBlogSettings = (): [typeof isDarkMode, typeof setDarkMode] => {
   }, [settings]);
 
   const setDarkMode = (isDarkMode: boolean) => {
+    const { systemDarkMode } = settings;
     setSettings({
       manualDarkMode: isDarkMode,
-      systemDarkMode: settings.systemDarkMode,
+      systemDarkMode,
     });
     if (!window) return;
     window.localStorage.setItem(
       SETTING_KEY,
       JSON.stringify({
         manualDarkMode: isDarkMode,
+        systemDarkMode,
       }),
     );
   };

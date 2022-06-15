@@ -7,7 +7,7 @@ import useUtils from 'hooks/useUtils';
 import { Theme } from 'assets/styles/theme';
 import Navigation from 'components/common/Header/Navigation';
 import SmSizeBr from 'components/common/SmSizeBr';
-
+import { keyframes, css } from '@emotion/react';
 type HeaderComponentProps = { theme: Theme };
 const HeaderComponent = styled('header')(() => ({
   display: 'flex',
@@ -26,6 +26,11 @@ const HeaderImageWrap = styled('div')(() => ({
   width: '100%',
   height: '100%',
   position: 'absolute',
+  animation: `${keyframes`
+    from { transform: scale(1.1) }
+    to { transform: scale(1) }
+  `} 1s ease-in forwards`,
+
   '&::after': {
     width: '100%',
     height: '100%',
@@ -33,7 +38,10 @@ const HeaderImageWrap = styled('div')(() => ({
     top: 0,
     display: 'block',
     content: '""',
-    backdropFilter: 'blur(2px)',
+    animation: `${keyframes`
+      from { backdrop-filter: brightness(1.1) blur(0px); }
+      to { backdrop-filter: brightness(0.8) blur(2px); }
+    `} 2s ease-out forwards;`,
   },
 }));
 
@@ -85,12 +93,21 @@ const Header: React.FC<HeaderProps> = ({ navigationClassName = '', headerClassNa
           <StaticImage
             css={{ width: '100%', height: '100%' }}
             src="../../../assets/images/header-background.jpg"
-            layout="fullWidth"
+            layout="constrained"
             alt="header background image"
           />
         </HeaderImageWrap>
         <HeaderTextArea>
-          <Typography themeColor="gray-100" variant="headline-h1" md="headline-h2" sm="headline-h3" as="h1">
+          <Typography
+            css={{
+              animation: `${keyframes`from { width: 1% } to { width: 100% }`} 0.5 ease-out`,
+            }}
+            themeColor="gray-100"
+            variant="headline-h1"
+            md="headline-h2"
+            sm="headline-h3"
+            as="h1"
+          >
             {title}
           </Typography>
           <Typography

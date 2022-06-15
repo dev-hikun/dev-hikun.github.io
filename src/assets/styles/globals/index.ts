@@ -29,7 +29,7 @@ const GlobalStyle = css([
       html, body, button, ul {
         margin: 0;
         padding: 0;
-        font-family: 'Noto Sans KR', serif;
+        font-family: 'Noto Sans KR',-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
         font-size: 16px;
       }
       body {

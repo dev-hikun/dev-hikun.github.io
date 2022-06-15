@@ -13,14 +13,27 @@ import mixins from 'assets/styles/mixins';
 type NavigationComponentProps = {
   theme: Theme;
 };
-const NavigationComponent = styled('nav')(() => {
-  return {
-    width: '100%',
-    position: 'fixed',
-    top: 0,
-    zIndex: 10,
-  };
-});
+const NavigationComponent = styled('nav')(() => ({
+  width: '100%',
+  position: 'fixed',
+  top: 0,
+  zIndex: 10,
+  borderWidth: 0,
+  background: 'transparent',
+  backdropFilter: 'initial',
+  transition: 'background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease',
+  willChange: 'color, background-color, border-color, backdrop-filter',
+
+  '&.is-active': {
+    borderBottom: `1px solid var(--hr-color)`,
+    backgroundColor: 'var(--nav-background-color)',
+    backdropFilter: 'blur(3px)',
+    'h1, span': { color: 'var(--text-color)' },
+    '.nav-button': {
+      color: `var(--text-color)`,
+    },
+  },
+}));
 
 const NaviWrap = styled('div')(({ theme }: NavigationComponentProps) => ({
   display: 'flex',
@@ -28,11 +41,6 @@ const NaviWrap = styled('div')(({ theme }: NavigationComponentProps) => ({
   maxWidth: theme.size.siteWidth,
   margin: '0 auto',
   padding: '10px 20px',
-  borderWidth: 0,
-  background: 'transparent',
-  backdropFilter: 'initial',
-  transition: 'background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease',
-  willChange: 'color, background-color, border-color, backdrop-filter',
 
   h1: {
     color: 'var(--gray-050)',
@@ -52,16 +60,6 @@ const NaviWrap = styled('div')(({ theme }: NavigationComponentProps) => ({
       [mixins.breakpoints.md]: {
         display: 'block',
       },
-    },
-  },
-
-  '&.is-active': {
-    borderBottom: `1px solid var(--hr-color)`,
-    backgroundColor: 'var(--nav-background-color)',
-    backdropFilter: 'blur(3px)',
-    'h1, span': { color: 'var(--text-color)' },
-    '.nav-button': {
-      color: `var(--text-color)`,
     },
   },
 
@@ -96,6 +94,8 @@ const MenuItem = styled('li')(() => ({
   listStyle: 'none',
   padding: '0 10px',
   a: {
+    transition: 'border-bottom 0.15s ease, color 0.25s ease',
+
     span: {
       color: 'var(--gray-050)',
     },
@@ -175,8 +175,8 @@ const Navigation: React.FC<NavigationProps> = ({ className }) => {
   }, []);
 
   return (
-    <NavigationComponent>
-      <NaviWrap className={useClassName([className, isScroll || isOpen ? 'is-active' : ''])}>
+    <NavigationComponent className={useClassName([isScroll || isOpen ? 'is-active' : ''])}>
+      <NaviWrap className={className}>
         <Button
           onClick={() => setIsOpen(!isOpen)}
           variant="none"
