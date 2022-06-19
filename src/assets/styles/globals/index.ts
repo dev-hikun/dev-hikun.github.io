@@ -127,16 +127,15 @@ const GlobalStyle = css([
     '.bg-transparent': { background: 'transparent' },
     '.border-solid': { borderStyle: 'solid' },
   },
-  `
-      @keyframes ripple {
-        from {
-          opacity: 1;
-          transform: scale(0);
-        }
-        to {
-          opacity: 0;
-          transform: scale(10);
-        }
-    `,
+  `@keyframes ripple {
+      from {
+        opacity: 1;
+        transform: scale(0);
+      }
+      to {
+        opacity: 0;
+        transform: scale(10);
+      }
+  }`,
 ]);
 export default GlobalStyle;

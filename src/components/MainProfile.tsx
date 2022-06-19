@@ -105,7 +105,7 @@ const IconWrap = styled('div')(() => ({
     },
   },
   [mixins.breakpoints.md]: {
-    border: 0,
+    borderTop: 0,
     margin: 0,
     padding: 0,
     flexBasis: 40,
@@ -139,13 +139,17 @@ const MainProfile: React.FC = () => {
         </Typography>
       </TextWrap>
       <IconWrap>
-        <Button variant="link" href="https://github.com/dev-hikun">
+        <Button variant="link" title="github" href="https://github.com/dev-hikun">
           <GithubIcon size={20} />
         </Button>
-        <Button variant="link" href="https://www.linkedin.com/in/%ED%9D%AC%ED%98%84-%EC%9D%B4-a40a80128/">
+        <Button
+          variant="link"
+          title="linkedin"
+          href="https://www.linkedin.com/in/%ED%9D%AC%ED%98%84-%EC%9D%B4-a40a80128/"
+        >
           <LinkedinIcon size={20} />
         </Button>
-        <Button variant="link" href="https://www.instagram.com/_def.unction/">
+        <Button variant="link" title="instagram" href="https://www.instagram.com/_def.unction/">
           <InstagramIcon size={20} />
         </Button>
       </IconWrap>

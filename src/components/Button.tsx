@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { Theme } from 'assets/styles/theme';
-import { ThemeColorKey, ThemeSemanticColorKey } from 'assets/styles/theme/colors';
+import { ThemeColorKey } from 'assets/styles/theme/colors';
 import React, { useCallback } from 'react';
 
 export type ButtonSize = 'tiny' | 'small' | 'medium' | 'large';
