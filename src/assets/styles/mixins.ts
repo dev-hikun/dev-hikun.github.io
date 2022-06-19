@@ -10,4 +10,6 @@ export default {
     (obj, [key, value]) => ({ ...obj, [key]: `@media (max-width: ${value}px)` }),
     {},
   ) as { [key in keyof typeof breakpoints]: string },
+  dark: '@media (prefers-color-scheme: dark)',
+  light: '@media (prefers-color-scheme: light)',
 };

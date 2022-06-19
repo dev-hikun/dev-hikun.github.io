@@ -194,17 +194,12 @@ const Navigation: React.FC<NavigationProps> = ({ className }) => {
         <MenuWrap className={useClassName([!isOpen || 'is-open'])}>
           <MenuItem>
             <Link title="About" to="/about">
-              <Typography variant="subhead-subhead4">About</Typography>
+              <Typography variant="subhead-subhead4">ABOUT</Typography>
             </Link>
           </MenuItem>
           <MenuItem>
-            <Link title="Tech" to="/tech">
-              <Typography variant="subhead-subhead4">Tech</Typography>
-            </Link>
-          </MenuItem>
-          <MenuItem>
-            <Link title="Life" to="/life">
-              <Typography variant="subhead-subhead4">Life</Typography>
+            <Link title="Style guide" to="/guide">
+              <Typography variant="subhead-subhead4">STYLE GUIDE</Typography>
             </Link>
           </MenuItem>
         </MenuWrap>

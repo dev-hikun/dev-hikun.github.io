@@ -1,10 +1,13 @@
 import React, { useState, useMemo, useEffect } from 'react';
+import useUtils from './useUtils';
 
 const SETTING_KEY = 'dev-hikun-blog';
 type BlogSettings = { systemDarkMode?: boolean; manualDarkMode?: boolean };
 const useBlogSettings = (): [typeof isDarkMode, typeof setDarkMode] => {
+  const { useIsSsr } = useUtils();
+  const isSsr = useIsSsr();
   const [settings, setSettings] = useState<BlogSettings>(() => {
-    if (typeof window === 'undefined') {
+    if (isSsr) {
       return {
         manualDarkMode: undefined,
         systemDarkMode: false,
@@ -41,7 +44,7 @@ const useBlogSettings = (): [typeof isDarkMode, typeof setDarkMode] => {
       manualDarkMode: isDarkMode,
       systemDarkMode,
     });
-    if (!window) return;
+    if (isSsr) return;
     window.localStorage.setItem(
       SETTING_KEY,
       JSON.stringify({

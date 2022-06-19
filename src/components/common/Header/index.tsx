@@ -7,7 +7,7 @@ import useUtils from 'hooks/useUtils';
 import { Theme } from 'assets/styles/theme';
 import Navigation from 'components/common/Header/Navigation';
 import SmSizeBr from 'components/common/SmSizeBr';
-import { keyframes, css } from '@emotion/react';
+import { keyframes } from '@emotion/react';
 type HeaderComponentProps = { theme: Theme };
 const HeaderComponent = styled('header')(() => ({
   display: 'flex',

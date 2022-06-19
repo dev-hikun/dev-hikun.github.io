@@ -8,7 +8,9 @@ const colorByTheme = (theme: Theme) => `
   --background-color: ${theme.color.background || ''};
   --nav-background-color: ${theme.color.navBackground || ''};
   --text-color: ${theme.color.text || ''};
+  --text-hover-color: ${theme.color.textHover || ''};
   --hr-color: ${theme.color.hr || ''};
+  --profile-background-color: ${theme.color.profileBackground || ''};
   .text-text: { color: ${theme.color.text || ''} };
 `;
 
@@ -77,8 +79,14 @@ const GlobalStyle = css([
         paddingTop: `${i}px`,
         paddingBottom: `${i}px`,
       },
+      [`.mt-${i}`]: {
+        marginTop: `${4 * i}px`,
+      },
       [`.p-${i}`]: {
         padding: `${4 * i}px`,
+      },
+      [`.m-${i}`]: {
+        margin: `${4 * i}px`,
       },
       [`.p-${i}px`]: {
         padding: `${i}px`,

@@ -3,11 +3,11 @@ import Text from 'components/text';
 import Header from 'components/common/Header';
 import WithThemes from 'components/common/WithThemes';
 
-const lifePage: React.FC = WithThemes(() => (
+const StyleGuide: React.FC = WithThemes(() => (
   <>
     <Header />
-    <Text text={`life page`} />
+    <Text text={`guide page`} />
   </>
 ));
 
-export default lifePage;
+export default StyleGuide;
