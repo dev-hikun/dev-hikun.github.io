@@ -6,6 +6,7 @@ export interface Theme {
   color: Record<AdditinalColorKey, React.CSSProperties['color']> & typeof colors;
   size: {
     siteWidth: number;
+    sectionBorderRadius: number;
   };
   isDark?: boolean;
 }
@@ -31,6 +32,7 @@ export const light: Theme = {
   },
   size: {
     siteWidth: 1200,
+    sectionBorderRadius: 8,
   },
 } as const;
 
@@ -42,10 +44,10 @@ export const dark: Theme = {
     ...light.color,
     text: ColorDic['gray-050'],
     textHover: ColorDic['gray-200'],
-    background: colors.gray[800],
-    profileBackground: colors.gray[700],
+    background: ColorDic['black-100'],
+    profileBackground: colors.gray[900],
     navBackground: ColorDic['black-90'],
-    hr: ColorDic['gray-700'],
+    hr: ColorDic['gray-800'],
   },
   size: {
     ...light.size,

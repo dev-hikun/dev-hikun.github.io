@@ -4,6 +4,7 @@ import { ThemeColorVariant, ThemeSemanticColorKey } from 'assets/styles/theme/co
 import mixins from 'assets/styles/mixins';
 import { Theme } from 'assets/styles/theme';
 import useUtils from 'hooks/useUtils';
+import { css } from '@emotion/react';
 
 const typographyVariantDict = {
   headline: ['h1', 'h2', 'h3', 'h4', 'h5'] as const,
@@ -183,12 +184,47 @@ export interface TypographyProps
   theme?: Theme;
   children?: React.ReactNode;
   as?: React.ElementType<any> | undefined;
+  ellipsis?: number;
 }
 
-const Typography: React.FC<TypographyProps> = ({ variant, children, className, themeColor, ...props }) => {
+const ellipsisClass = (ellipsis: number) => css`
+  ${ellipsis > 0
+    ? `
+      width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      ${
+        ellipsis === 1
+          ? `white-space: nowrap;`
+          : `-webkit-line-clamp: ${ellipsis};
+            white-space: normal;
+            text-align: left;
+            word-wrap: break-word;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;`
+      }
+    `
+    : ``}
+`;
+
+const Typography: React.FC<TypographyProps> = ({
+  variant,
+  children,
+  className,
+  ellipsis,
+  themeColor,
+  css = {},
+  ...props
+}) => {
   const { useClassName } = useUtils();
+  const ellipsisCss = ellipsis ? ellipsisClass(Number(ellipsis)) : {};
   return (
-    <TypographyComponent className={useClassName([className, themeColor])} variant={variant} {...props}>
+    <TypographyComponent
+      css={Object.assign(ellipsisCss, css, {})}
+      className={useClassName([className, themeColor ? `text-${themeColor}` : ''])}
+      variant={variant}
+      {...props}
+    >
       {children}
     </TypographyComponent>
   );
