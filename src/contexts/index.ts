@@ -1,6 +1,13 @@
-import { BlogSettingsContext } from 'hooks/useBlogSettings';
-import { useContext } from 'react';
+import React, { useContext } from 'react';
 
-export const useBlogSettingsContext = () => {
-  return useContext(BlogSettingsContext);
+export const DarkModeContext = React.createContext<{
+  isDarkMode?: boolean;
+  toggle?: () => void;
+}>({
+  isDarkMode: undefined,
+  toggle: undefined,
+});
+
+export const useDarkModeContext = () => {
+  return useContext(DarkModeContext);
 };

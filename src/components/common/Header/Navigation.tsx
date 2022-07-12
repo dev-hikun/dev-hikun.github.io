@@ -1,6 +1,5 @@
 import styled from '@emotion/styled';
 import { Theme } from 'assets/styles/theme';
-import { useBlogSettingsContext } from 'contexts';
 import React, { memo, useCallback, useEffect, useState } from 'react';
 import useUtils from 'hooks/useUtils';
 import Button from 'components/Button';
@@ -9,6 +8,7 @@ import { RiMoonFill as DarkThemeIcon } from 'react-icons/ri';
 import Typography from 'components/Typography';
 import { Link } from 'gatsby';
 import mixins from 'assets/styles/mixins';
+import { useDarkModeContext } from 'contexts/index';
 
 type NavigationComponentProps = {
   theme: Theme;
@@ -139,15 +139,9 @@ const Space = styled('div')(() => ({
 }));
 
 const ModeChangeButton = memo(() => {
-  const { isDarkMode, setDarkMode } = useBlogSettingsContext();
+  const { isDarkMode, toggle } = useDarkModeContext();
   return (
-    <Button
-      variant="none"
-      themeColor="gray"
-      size="tiny"
-      className="nav-button"
-      onClick={() => setDarkMode && setDarkMode(!isDarkMode)}
-    >
+    <Button variant="none" themeColor="gray" size="tiny" className="nav-button" onClick={() => toggle && toggle()}>
       {isDarkMode ? <LightThemeIcon size={20} /> : <DarkThemeIcon size={20} />}
     </Button>
   );

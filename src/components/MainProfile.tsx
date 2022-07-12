@@ -15,7 +15,8 @@ const Profile = styled('div')(() => ({
   display: 'flex',
   flexDirection: 'column',
   borderRadius: 6,
-  backgroundColor: 'var(--profile-background-color)',
+  border: '1px solid var(--hr-color)',
+  backgroundColor: 'var(--background-color)',
   padding: '20px',
   position: 'relative',
   overflow: 'hidden',
@@ -139,17 +140,18 @@ const MainProfile: React.FC = () => {
         </Typography>
       </TextWrap>
       <IconWrap>
-        <Button variant="link" title="github" href="https://github.com/dev-hikun">
+        <Button variant="link" title="github" target="_blank" href="https://github.com/dev-hikun">
           <GithubIcon size={20} />
         </Button>
         <Button
           variant="link"
           title="linkedin"
+          target="_blank"
           href="https://www.linkedin.com/in/%ED%9D%AC%ED%98%84-%EC%9D%B4-a40a80128/"
         >
           <LinkedinIcon size={20} />
         </Button>
-        <Button variant="link" title="instagram" href="https://www.instagram.com/_def.unction/">
+        <Button variant="link" title="instagram" target="_blank" href="https://www.instagram.com/_def.unction/">
           <InstagramIcon size={20} />
         </Button>
       </IconWrap>

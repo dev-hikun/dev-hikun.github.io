@@ -54,6 +54,7 @@ const PostList = styled('ul')(() => ({
 const PostItem = styled('li')(({ theme }) => ({
   borderRadius: theme.size.sectionBorderRadius,
   backgroundColor: 'var(--profile-background-color)',
+  border: '1px solid var(--hr-color)',
   overflow: 'hidden',
   listStyle: 'none',
   transition: 'all .15s',

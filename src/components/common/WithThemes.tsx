@@ -2,19 +2,21 @@ import { Global, ThemeProvider } from '@emotion/react';
 import React from 'react';
 import THEME from 'assets/styles/theme';
 import GlobalStyle from 'assets/styles/globals';
-import useTheme, { BlogSettingsContext } from 'hooks/useBlogSettings';
+import useDarkMode from 'use-dark-mode';
 import 'assets/styles/globals/index.css';
+import { DarkModeContext } from 'contexts/index';
 
 function WithThemes<T>(Component: React.FC<T>) {
   return (props: React.ComponentProps<React.FC<T>>) => {
-    const [isDarkMode, setDarkMode] = useTheme();
+    const { toggle, value } = useDarkMode();
+
     return (
-      <BlogSettingsContext.Provider value={{ isDarkMode, setDarkMode }}>
-        <ThemeProvider theme={THEME[isDarkMode ? 'dark' : 'light']}>
+      <DarkModeContext.Provider value={{ isDarkMode: value, toggle }}>
+        <ThemeProvider theme={THEME[value ? 'dark' : 'light']}>
           <Global styles={GlobalStyle} />
           <Component {...props} />
         </ThemeProvider>
-      </BlogSettingsContext.Provider>
+      </DarkModeContext.Provider>
     );
   };
 }

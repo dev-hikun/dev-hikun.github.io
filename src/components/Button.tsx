@@ -135,8 +135,6 @@ const Button = React.forwardRef<HTMLAnchorElement & HTMLButtonElement, ButtonPro
   ) => {
     const onClickButtonComponent = useCallback(
       (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-        e.preventDefault();
-
         const element = e.target as HTMLElement;
         const button = element.closest('button');
         if (button) {

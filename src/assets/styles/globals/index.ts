@@ -10,7 +10,6 @@ const colorByTheme = (theme: Theme) => `
   --text-color: ${theme.color.text || ''};
   --text-hover-color: ${theme.color.textHover || ''};
   --hr-color: ${theme.color.hr || ''};
-  --profile-background-color: ${theme.color.profileBackground || ''};
   .text-text: { color: ${theme.color.text || ''} };
 `;
 
@@ -20,7 +19,7 @@ const GlobalStyle = css([
         ${colorByTheme(light)}
         ${ColorDicKeys.map(key => `--${key}: ${ColorDic[key] || ''}`).join(';')}
       }
-      [data-theme="dark"] {
+      .dark-mode {
         ${colorByTheme(dark)}
       }
     `,

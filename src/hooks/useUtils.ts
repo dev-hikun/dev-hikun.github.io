@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useState } from 'react';
-
 const useUtils = () => {
   const useClassName = useCallback((classNames: (string | undefined | boolean)[]) => {
     return classNames.filter(a => a).join(' ') || undefined;
