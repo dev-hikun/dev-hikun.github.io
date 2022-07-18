@@ -169,8 +169,10 @@ const Navigation: React.FC<NavigationProps> = ({ className }) => {
     };
   }, []);
 
+  const isActive = isScroll || isOpen;
+
   return (
-    <NavigationComponent className={useClassName([isScroll || isOpen ? 'is-active' : ''])}>
+    <NavigationComponent className={useClassName([isActive ? 'is-active' : ''])}>
       <NaviWrap className={className}>
         <Button
           onClick={() => setIsOpen(!isOpen)}
@@ -182,7 +184,7 @@ const Navigation: React.FC<NavigationProps> = ({ className }) => {
           <HambergerIcon size={20} />
         </Button>
         <Logo title="Home" to="/">
-          <LogoImg width={80} height={32} />
+          <LogoImg width={80} height={32} isActive={isActive} />
         </Logo>
         <MenuWrap className={useClassName([!isOpen || 'is-open'])}>
           <MenuItem>

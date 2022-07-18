@@ -113,7 +113,7 @@ const Header: React.FC<HeaderProps> = ({
   const {
     title = (
       <>
-        이희현의 <SmSizeBr />
+        Hikun의 <SmSizeBr />
         제멋대로 블로그
       </>
     ),
