@@ -8,6 +8,7 @@ import { Theme } from 'assets/styles/theme';
 import Navigation from 'components/common/Header/Navigation';
 import SmSizeBr from 'components/common/SmSizeBr';
 import { keyframes } from '@emotion/react';
+import Button from 'components/Button';
 type HeaderComponentProps = { theme: Theme };
 
 const HeaderWrapper = styled('div')(() => ({
@@ -21,17 +22,21 @@ const HeaderWrapper = styled('div')(() => ({
 
 const HeaderComponent = styled('header')(() => ({
   position: 'relative',
-  '&::after': {
-    clear: 'both',
-    display: 'block',
-    width: '100%',
-    height: 0,
-    content: '""',
+  overflow: 'hidden',
+  display: 'flex',
+  alignItems: 'flex-end',
+  height: 600,
+  [mixins.breakpoints.md]: {
+    height: 400,
+  },
+  [mixins.breakpoints.sm]: {
+    height: 320,
   },
 }));
 
 const HeaderImageWrap = styled('div')(() => ({
   width: '100%',
+  height: '100%',
   top: 0,
   position: 'absolute',
   animation: `${keyframes`
@@ -55,11 +60,12 @@ const HeaderImageWrap = styled('div')(() => ({
 
 const HeaderTextArea = styled('div')(({ theme }: HeaderComponentProps) => ({
   width: theme.size.siteWidth,
+  textShadow: '0 0 0.25rem black',
   margin: '0 auto',
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'flex-end',
-  padding: '30px 20px',
+  padding: '10rem 20px 30px',
   position: 'relative',
   zIndex: 3,
   color: 'var(--gray-050)',
@@ -71,15 +77,38 @@ const HeaderTextArea = styled('div')(({ theme }: HeaderComponentProps) => ({
   },
 }));
 
+const Tags = styled('div')(() => ({
+  display: 'flex',
+}));
+
+const Tag = styled(Button)(() => ({
+  padding: '2px 5px',
+  ':not(:first-of-type)': {
+    marginLeft: 5,
+  },
+  fontSize: '0.8rem',
+  '::before': {
+    display: 'inline',
+    content: '"#"',
+  },
+}));
+
 interface HeaderProps {
   title?: React.ReactNode;
   image?: ImageDataLike;
+  tags?: string[];
   description?: React.ReactNode;
   navigationClassName?: string;
   headerClassName?: string;
 }
 
-const Header: React.FC<HeaderProps> = ({ navigationClassName = '', headerClassName = '', image, ...props }) => {
+const Header: React.FC<HeaderProps> = ({
+  navigationClassName = '',
+  headerClassName = '',
+  tags = [],
+  image,
+  ...props
+}) => {
   const { useClassName } = useUtils();
   const {
     title = (
@@ -103,6 +132,15 @@ const Header: React.FC<HeaderProps> = ({ navigationClassName = '', headerClassNa
       <Navigation className={useClassName([navigationClassName])} />
       <HeaderComponent className={useClassName([headerClassName])}>
         <HeaderTextArea>
+          {tags.length !== 0 && (
+            <Tags>
+              {tags.map(tag => (
+                <Tag variant="link" themeColor="gray" key={tag}>
+                  {tag}
+                </Tag>
+              ))}
+            </Tags>
+          )}
           <Typography
             css={{
               animation: `${keyframes`from { width: 1% } to { width: 100% }`} 0.5 ease-out`,
@@ -127,7 +165,7 @@ const Header: React.FC<HeaderProps> = ({ navigationClassName = '', headerClassNa
         </HeaderTextArea>
         <HeaderImageWrap>
           {image && src ? (
-            <GatsbyImage image={src} alt={String(title)} />
+            <GatsbyImage css={{ width: '100%', height: '100%' }} image={src} alt={String(title)} />
           ) : (
             <StaticImage
               css={{ width: '100%', height: '100%' }}

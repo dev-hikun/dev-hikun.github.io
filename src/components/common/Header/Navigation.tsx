@@ -9,7 +9,7 @@ import Typography from 'components/Typography';
 import { Link } from 'gatsby';
 import mixins from 'assets/styles/mixins';
 import { useDarkModeContext } from 'contexts/index';
-import { ReactComponent as LogoImg } from 'assets/images/logo.svg';
+import LogoImg from 'components/common/Header/Logo';
 
 type NavigationComponentProps = {
   theme: Theme;
@@ -182,14 +182,7 @@ const Navigation: React.FC<NavigationProps> = ({ className }) => {
           <HambergerIcon size={20} />
         </Button>
         <Logo title="Home" to="/">
-          <LogoImg
-            css={{
-              width: 82,
-              height: 34,
-              fill: 'red',
-              color: 'blue',
-            }}
-          />
+          <LogoImg width={80} height={32} />
         </Logo>
         <MenuWrap className={useClassName([!isOpen || 'is-open'])}>
           <MenuItem>

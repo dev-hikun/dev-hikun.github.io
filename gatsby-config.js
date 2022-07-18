@@ -1,7 +1,7 @@
 module.exports = {
   siteMetadata: {
     title: `hikun's personal blog`,
-    description: `개발자 이희현의 개인 블로그`,
+    description: `개발자 Hikun의 블로그`,
     author: `@hikun`,
     siteUrl: `https://dev-hikun.github.io/`,
   },
@@ -30,7 +30,7 @@ module.exports = {
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
-        name: `개발자 이희현의 블로그`,
+        name: `개발자 Hikun의 블로그`,
         short_name: `blog hikun`,
         start_url: `/`,
         background_color: `#fff`,

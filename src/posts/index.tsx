@@ -48,13 +48,13 @@ const ContentArea = styled('section')(({ theme }) => ({
 const postPage: React.FC<MarkdownRemark<PostQueryData>> = WithThemes(({ data }) => {
   const {
     markdownRemark: {
-      frontmatter: { title, date, featuredImage },
+      frontmatter: { title, date, featuredImage, tags },
       html,
     },
   } = data;
   return (
     <>
-      <Header title={title} description={date} image={featuredImage} />
+      <Header title={title} description={date} image={featuredImage} tags={tags} />
       <ContentArea dangerouslySetInnerHTML={{ __html: html }} />
     </>
   );
@@ -68,6 +68,7 @@ export const query = graphql`
         title
         date
         slug
+        tags
         featuredImage {
           childImageSharp {
             gatsbyImageData
