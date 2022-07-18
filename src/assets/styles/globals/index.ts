@@ -10,6 +10,8 @@ const colorByTheme = (theme: Theme) => `
   --text-color: ${theme.color.text || ''};
   --text-hover-color: ${theme.color.textHover || ''};
   --hr-color: ${theme.color.hr || ''};
+  --blockquote-color: ${theme.color.blockquote || ''};
+  --content-background-color: ${theme.color.contentBackground || ''};
   .text-text: { color: ${theme.color.text || ''} };
 `;
 
@@ -58,15 +60,21 @@ const GlobalStyle = css([
   Array.from({ length: 100 }, (_, i) => i).reduce(
     (classes: { [x: string]: any }, i) => ({
       ...classes,
-      [`.px-${i}`]: {
+      [`.pl-${i}, .px-${i}, .p-${i}`]: {
         paddingLeft: `${4 * i}px`,
+      },
+      [`.pr-${i}, .px-${i}, .p-${i}`]: {
         paddingRight: `${4 * i}px`,
       },
-      [`.py-${i}`]: {
+      [`.pt-${i}, .py-${i}, .p-${i}`]: {
         paddingTop: `${4 * i}px`,
-        paddingBottom: `${4 * i}px`,
         [`&.button--outlined`]: {
           paddingTop: `${4 * i - 1}px`,
+        },
+      },
+      [`.pb-${i}, .py-${i}, .p-${i}`]: {
+        paddingBottom: `${4 * i}px`,
+        [`&.button--outlined`]: {
           paddingBottom: `${4 * i - 1}px`,
         },
       },
@@ -80,9 +88,6 @@ const GlobalStyle = css([
       },
       [`.mt-${i}`]: {
         marginTop: `${4 * i}px`,
-      },
-      [`.p-${i}`]: {
-        padding: `${4 * i}px`,
       },
       [`.m-${i}`]: {
         margin: `${4 * i}px`,

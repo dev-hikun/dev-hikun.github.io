@@ -120,7 +120,7 @@ const semanticColor: Record<ThemeSemanticColorKey, React.CSSProperties['color']>
 const colorKeys = Object.keys(colors) as ThemeColorKey[];
 const getColorVariantKeys = (key: ThemeColorKey) => Object.keys(colors[key]) as ColorVariantKey[];
 const getGrayscaleVaraintKeys = (key: GrayscaleKey) => Object.keys(grayscale[key]) as AlphaVaraintKey[];
-const kebabColors = colorKeys.reduce(
+const kebabColors: Array<ThemeColorVariant> = colorKeys.reduce(
   (arr: ThemeColorVariant[], key) => [
     ...arr,
     ...getColorVariantKeys(key).map<ThemeColorVariant>(vKey => `${key}-${vKey}`),
@@ -133,7 +133,7 @@ const themeColorDic = kebabColors.reduce((obj, kebabKey) => {
   return { ...obj, [kebabKey]: colors[key][variant] };
 }, {}) as Record<ThemeColorVariant, string>;
 
-const kebabGrayScales = (Object.keys(grayscale) as Array<GrayscaleKey>).reduce(
+const kebabGrayScales: Array<GrayscaleVaraint> = (Object.keys(grayscale) as Array<GrayscaleKey>).reduce(
   (arr: GrayscaleVaraint[], key) => [
     ...arr,
     ...getGrayscaleVaraintKeys(key).map<GrayscaleVaraint>(vKey => `${key}-${vKey}`),

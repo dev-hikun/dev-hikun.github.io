@@ -10,13 +10,13 @@ import {
 } from 'react-icons/ai';
 import Button from './Button';
 
-const Profile = styled('div')(() => ({
+const Profile = styled('div')(({ theme }) => ({
   width: '100%',
   display: 'flex',
   flexDirection: 'column',
   borderRadius: 6,
-  border: '1px solid var(--hr-color)',
-  backgroundColor: 'var(--background-color)',
+  backgroundColor: 'var(--content-background-color)',
+  boxShadow: `10px 20px 20px 0 ${theme.isDark ? 'rgba(255,255,255, .08)' : 'rgba(92, 95, 112, .08)'}`,
   padding: '20px',
   position: 'relative',
   overflow: 'hidden',
@@ -32,14 +32,6 @@ const Profile = styled('div')(() => ({
     backdropFilter: 'brightness(1.0)',
     transition: 'all .15s',
   },
-  // '&:hover': {
-  //   boxShadow: '10px 20px 30px 0 rgba(11, 12, 14, .16)',
-  //   transform: 'translate3d(0, -4px, 0)',
-  //   '&::after': {
-  //     content: '""',
-  //     backdropFilter: 'brightness(0.9)',
-  //   },
-  // },
   [mixins.breakpoints.md]: {
     flexDirection: 'row',
   },

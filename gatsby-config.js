@@ -1,7 +1,7 @@
 module.exports = {
   siteMetadata: {
     title: `hikun's personal blog`,
-    description: `Harry의 개인 블로그`,
+    description: `개발자 이희현의 개인 블로그`,
     author: `@hikun`,
     siteUrl: `https://dev-hikun.github.io/`,
   },
@@ -19,11 +19,12 @@ module.exports = {
     {
       resolve: `gatsby-source-filesystem`,
       options: {
-        name: `images`,
-        path: `${__dirname}/src/assets/images`,
+        name: `posts`,
+        path: `${__dirname}/src/posts`,
       },
     },
     'gatsby-plugin-svgr',
+    'gatsby-transformer-remark',
     `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,
     {

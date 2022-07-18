@@ -12,7 +12,7 @@ const ButtonTestScreen: React.FC = () => {
           <ul
             key={str}
             css={{
-              backgroundColor: str === 'dark' ? 'black' : 'tranparent',
+              backgroundColor: str === 'dark' ? 'black' : 'white',
               padding: 0,
               margin: 0,
               '& > li': {
