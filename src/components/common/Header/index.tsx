@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import mixins from 'assets/styles/mixins';
-import { StaticImage } from 'gatsby-plugin-image';
+import { StaticImage, getImage, ImageDataLike, GatsbyImage } from 'gatsby-plugin-image';
 import Typography from 'components/Typography';
 import useUtils from 'hooks/useUtils';
 import { Theme } from 'assets/styles/theme';
@@ -9,22 +9,30 @@ import Navigation from 'components/common/Header/Navigation';
 import SmSizeBr from 'components/common/SmSizeBr';
 import { keyframes } from '@emotion/react';
 type HeaderComponentProps = { theme: Theme };
-const HeaderComponent = styled('header')(() => ({
-  display: 'flex',
-  position: 'relative',
-  height: 600,
-  overflow: 'hidden',
-  [mixins.breakpoints.md]: {
-    height: 400,
+
+const HeaderWrapper = styled('div')(() => ({
+  '&::after': {
+    display: 'block',
+    width: '100%',
+    height: 0,
+    content: '""',
   },
-  [mixins.breakpoints.sm]: {
-    height: 320,
+}));
+
+const HeaderComponent = styled('header')(() => ({
+  position: 'relative',
+  '&::after': {
+    clear: 'both',
+    display: 'block',
+    width: '100%',
+    height: 0,
+    content: '""',
   },
 }));
 
 const HeaderImageWrap = styled('div')(() => ({
   width: '100%',
-  height: '100%',
+  top: 0,
   position: 'absolute',
   animation: `${keyframes`
     from { transform: scale(1.1) }
@@ -65,12 +73,13 @@ const HeaderTextArea = styled('div')(({ theme }: HeaderComponentProps) => ({
 
 interface HeaderProps {
   title?: React.ReactNode;
+  image?: ImageDataLike;
   description?: React.ReactNode;
   navigationClassName?: string;
   headerClassName?: string;
 }
 
-const Header: React.FC<HeaderProps> = ({ navigationClassName = '', headerClassName = '', ...props }) => {
+const Header: React.FC<HeaderProps> = ({ navigationClassName = '', headerClassName = '', image, ...props }) => {
   const { useClassName } = useUtils();
   const {
     title = (
@@ -88,18 +97,11 @@ const Header: React.FC<HeaderProps> = ({ navigationClassName = '', headerClassNa
     ),
   } = props;
 
+  const src = image && getImage(image);
   return (
-    <>
+    <HeaderWrapper>
       <Navigation className={useClassName([navigationClassName])} />
       <HeaderComponent className={useClassName([headerClassName])}>
-        <HeaderImageWrap>
-          <StaticImage
-            css={{ width: '100%', height: '100%' }}
-            src="../../../assets/images/header-background.jpg"
-            layout="constrained"
-            alt="header background image"
-          />
-        </HeaderImageWrap>
         <HeaderTextArea>
           <Typography
             css={{
@@ -123,8 +125,20 @@ const Header: React.FC<HeaderProps> = ({ navigationClassName = '', headerClassNa
             {description}
           </Typography>
         </HeaderTextArea>
+        <HeaderImageWrap>
+          {image && src ? (
+            <GatsbyImage image={src} alt={String(title)} />
+          ) : (
+            <StaticImage
+              css={{ width: '100%', height: '100%' }}
+              src="../../../assets/images/header-background.jpg"
+              layout="constrained"
+              alt="header background image"
+            />
+          )}
+        </HeaderImageWrap>
       </HeaderComponent>
-    </>
+    </HeaderWrapper>
   );
 };
 export default Header;

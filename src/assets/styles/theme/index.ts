@@ -1,7 +1,15 @@
 import React from 'react';
 import colors, { ColorDic } from './colors';
 
-type AdditinalColorKey = 'background' | 'text' | 'textHover' | 'link' | 'hr' | 'navBackground' | 'blockquote';
+type AdditinalColorKey =
+  | 'background'
+  | 'text'
+  | 'textHover'
+  | 'link'
+  | 'hr'
+  | 'navBackground'
+  | 'blockquote'
+  | 'contentBackground';
 export interface Theme {
   color: Record<AdditinalColorKey, React.CSSProperties['color']> & typeof colors;
   size: {
@@ -21,13 +29,14 @@ interface ThemeGroup {
  */
 export const light: Theme = {
   color: {
-    background: colors.white,
+    background: ColorDic['gray-200'],
     navBackground: ColorDic['white-90'],
     text: ColorDic['gray-900'],
     textHover: ColorDic['gray-600'],
     link: ColorDic['blue-500'],
-    hr: ColorDic['gray-200'],
+    hr: ColorDic['gray-300'],
     blockquote: ColorDic['gray-400'],
+    contentBackground: ColorDic['white'],
     ...colors,
   },
   size: {
@@ -48,6 +57,7 @@ export const dark: Theme = {
     navBackground: ColorDic['black-90'],
     blockquote: ColorDic['gray-600'],
     hr: ColorDic['gray-800'],
+    contentBackground: ColorDic['gray-900'],
   },
   size: {
     ...light.size,

@@ -1,21 +1,19 @@
 import React from 'react';
-import Text from 'components/text';
 import Header from 'components/common/Header';
 import WithThemes from 'components/common/WithThemes';
 import { graphql } from 'gatsby';
 import styled from '@emotion/styled';
+import { MarkdownRemark } from 'interfaces';
+import { ImageDataLike } from 'gatsby-plugin-image';
 
-interface PostProps {
-  data: {
-    markdownRemark: {
-      frontmatter: {
-        title: string;
-        date: string;
-        tags: string[];
-      };
-      html: string;
-    };
+interface PostQueryData {
+  frontmatter: {
+    title: string;
+    date: string;
+    tags: string[];
+    featuredImage?: ImageDataLike;
   };
+  html: string;
 }
 
 const ContentArea = styled('section')(({ theme }) => ({
@@ -35,18 +33,28 @@ const ContentArea = styled('section')(({ theme }) => ({
       color: 'var(--blue-500)',
     },
   },
+  pre: {
+    maxWidth: '100%',
+    code: {
+      maxWidth: '100%',
+      whiteSpace: 'break-spaces',
+    },
+  },
+  img: {
+    maxWidth: '100%',
+  },
 }));
 
-const postPage: React.FC<PostProps> = WithThemes(({ data }) => {
+const postPage: React.FC<MarkdownRemark<PostQueryData>> = WithThemes(({ data }) => {
   const {
     markdownRemark: {
-      frontmatter: { title, date },
+      frontmatter: { title, date, featuredImage },
       html,
     },
   } = data;
   return (
     <>
-      <Header title={title} description={date} />
+      <Header title={title} description={date} image={featuredImage} />
       <ContentArea dangerouslySetInnerHTML={{ __html: html }} />
     </>
   );
@@ -59,6 +67,12 @@ export const query = graphql`
       frontmatter {
         title
         date
+        slug
+        featuredImage {
+          childImageSharp {
+            gatsbyImageData
+          }
+        }
       }
     }
   }

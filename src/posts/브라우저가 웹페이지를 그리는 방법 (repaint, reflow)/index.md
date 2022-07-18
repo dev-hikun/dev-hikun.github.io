@@ -2,7 +2,7 @@
 title: 브라우저가 웹 페이지를 그리는 방법 (repaint, reflow)
 date: '2022-04-29'
 slug: '/posts/브라우저가-웹-페이지를-그리는-방법-(repaint, reflow)'
-tags: ['Browser Rendering Process', 'Render', 'Repaint', 'Reflow']
+tags: ['Computer Science', 'Browser Rendering Process', 'Render', 'Repaint', 'Reflow']
 ---
 # 💻 Browser Rendering Process
 
