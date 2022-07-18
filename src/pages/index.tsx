@@ -8,6 +8,7 @@ import MainProfile from 'components/MainProfile';
 import { StaticImage } from 'gatsby-plugin-image';
 import { ColorDic } from 'assets/styles/theme/colors';
 import { keyframes } from '@emotion/react';
+import { graphql, Link } from 'gatsby';
 
 const Aside = styled('aside')(() => ({
   flexGrow: 1,
@@ -30,6 +31,13 @@ const AsideSection: React.FC = () => {
 
 interface PostListProps {
   title?: string;
+  posts: Array<{
+    title: string;
+    content: string;
+    tags: string[];
+    date: string;
+    slug: string;
+  }>;
 }
 const PostWrap = styled('section')(() => ({
   flexBasis: '100%',
@@ -87,14 +95,14 @@ const PostItemHeader = styled('div')(() => ({
   borderBottom: '1px solid var(--hr-color)',
 }));
 
-const PostItemImageWrapper = styled('a')(() => ({
+const PostItemImageWrapper = styled(Link)(() => ({
   height: 160,
   backgroundColor: 'var(--hr-color)',
   overflow: 'hidden',
   display: 'block',
 }));
 
-const PostItemDescription = styled('a')(() => ({
+const PostItemDescription = styled(Link)(() => ({
   padding: '24px 24px 0 24px',
   display: 'block',
   '.post-title': {
@@ -111,7 +119,12 @@ const PostItemTags = styled('div')(({ theme }) => ({
   padding: 24,
   margin: '0px -3px',
   span: {
+    display: 'inline-block',
+    maxWidth: '23%',
+    overflow: 'hidden',
     padding: '2px 6px',
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
     margin: '0px 3px',
     borderRadius: '8px',
     backgroundColor: theme.isDark ? ColorDic['gray-500'] : ColorDic['gray-200'],
@@ -125,62 +138,59 @@ const PostItemFooter = styled('div')(() => ({
 }));
 
 const Posts: React.FC<PostListProps> = props => {
-  const { title } = props;
+  const { posts, title } = props;
   return (
     <PostWrap>
       {title ? <Typography variant="headline-h5">{title}</Typography> : null}
       <PostList>
-        {Array(20)
-          .fill(1)
-          .map((_, i) => {
-            return (
-              <PostItem key={i}>
-                <PostItemHeader>
-                  <PostItemImageWrapper href="/">
-                    <StaticImage
-                      src={'../assets/images/sample-image.svg'}
-                      alt={'ㅁㅇㄴㄹㅁㅇㄴㄹㅁㄴㄹㄹㅁ'}
-                      layout="fullWidth"
-                    />
-                  </PostItemImageWrapper>
-                  <PostItemDescription href="/">
-                    <Typography
-                      className="post-title"
-                      variant="subhead-subhead3"
-                      as="h3"
-                      ellipsis={2}
-                      css={{ height: '48px' }}
-                    >
-                      개츠비로 블로그를 만들면서 디자인시스템도 함께 개발하면 개발량이 어마무시해요! 두줄을 넘기기
-                      위해선 텍스트를
-                    </Typography>
-                    <Typography
-                      className="post-description"
-                      variant="interface-body2"
-                      themeColor="gray-500"
-                      as="div"
-                      ellipsis={4}
-                      css={{ height: '88px' }}
-                    >
-                      함께 하고 있는데 개발량이 엄청 어마무시한 건에 대하여 설명을 쓰려고 하는데 두줄이 넘어가겠죠?
-                      이정도 작성하면? 그렇죠? 4줄까지 나오게 하려고 해요. 그럴려면 설명이 진짜 길어야 하는데 넣기가
-                      너무 힘드네요
-                    </Typography>
-                  </PostItemDescription>
-                  <PostItemTags>
-                    <Typography variant="interface-description">개발</Typography>
-                    <Typography variant="interface-description">React</Typography>
-                    <Typography variant="interface-description">Gatsby</Typography>
-                  </PostItemTags>
-                </PostItemHeader>
-                <PostItemFooter>
-                  <Typography variant="interface-description" themeColor="gray-500">
-                    2022.06.20
+        {posts.map((item, i) => {
+          return (
+            <PostItem key={item.title}>
+              <PostItemHeader>
+                <PostItemImageWrapper to={item.slug}>
+                  <StaticImage
+                    src={'../assets/images/sample-image.svg'}
+                    alt={'ㅁㅇㄴㄹㅁㅇㄴㄹㅁㄴㄹㄹㅁ'}
+                    layout="fullWidth"
+                  />
+                </PostItemImageWrapper>
+                <PostItemDescription to={item.slug}>
+                  <Typography
+                    className="post-title"
+                    variant="subhead-subhead3"
+                    as="h3"
+                    ellipsis={2}
+                    css={{ height: '48px' }}
+                  >
+                    {item.title}
                   </Typography>
-                </PostItemFooter>
-              </PostItem>
-            );
-          })}
+                  <Typography
+                    className="post-description"
+                    variant="interface-body2"
+                    themeColor="gray-500"
+                    as="div"
+                    ellipsis={4}
+                    css={{ height: '88px' }}
+                  >
+                    {item.content}
+                  </Typography>
+                </PostItemDescription>
+                <PostItemTags>
+                  {item.tags.map(tag => (
+                    <Typography variant="interface-description" key={tag}>
+                      {tag}
+                    </Typography>
+                  ))}
+                </PostItemTags>
+              </PostItemHeader>
+              <PostItemFooter>
+                <Typography variant="interface-description" themeColor="gray-500">
+                  {item.date}
+                </Typography>
+              </PostItemFooter>
+            </PostItem>
+          );
+        })}
       </PostList>
     </PostWrap>
   );
@@ -198,13 +208,64 @@ const MainLayout = styled('div')(({ theme }) => ({
   },
 }));
 
-const indexPage: React.FC = WithThemes(() => (
-  <>
-    <Header />
-    <MainLayout>
-      <AsideSection />
-      <Posts />
-    </MainLayout>
-  </>
-));
+interface IndexPageProps {
+  data: {
+    allMarkdownRemark: {
+      edges: Array<{
+        node: {
+          excerpt: string;
+          frontmatter: {
+            date: string;
+            title: string;
+            tags: string[];
+            slug: string;
+          };
+        };
+      }>;
+    };
+  };
+}
+
+const indexPage: React.FC<IndexPageProps> = WithThemes(({ data }) => {
+  const posts: PostListProps['posts'] = data.allMarkdownRemark.edges.map(item => {
+    const {
+      node: { excerpt, frontmatter },
+    } = item;
+    const { date, tags, title, slug } = frontmatter;
+    return {
+      title,
+      tags,
+      date,
+      slug,
+      content: excerpt,
+    };
+  });
+  return (
+    <>
+      <Header />
+      <MainLayout>
+        <AsideSection />
+        <Posts posts={posts} />
+      </MainLayout>
+    </>
+  );
+});
+
+export const query = graphql`
+  query LatestPostListQuery {
+    allMarkdownRemark(sort: { order: DESC, fields: frontmatter___date }) {
+      edges {
+        node {
+          excerpt(truncate: true, pruneLength: 200)
+          frontmatter {
+            title
+            date(formatString: "YYYY-MM-DD")
+            tags
+            slug
+          }
+        }
+      }
+    }
+  }
+`;
 export default indexPage;

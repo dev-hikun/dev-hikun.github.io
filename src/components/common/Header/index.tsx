@@ -48,15 +48,18 @@ const HeaderImageWrap = styled('div')(() => ({
 const HeaderTextArea = styled('div')(({ theme }: HeaderComponentProps) => ({
   width: theme.size.siteWidth,
   margin: '0 auto',
-  padding: '25rem 20px 0',
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'flex-end',
+  padding: '30px 20px',
   position: 'relative',
   zIndex: 3,
   color: 'var(--gray-050)',
   [mixins.breakpoints.md]: {
-    padding: '15rem 20px 0',
+    padding: '20px',
   },
   [mixins.breakpoints.sm]: {
-    padding: '7.5rem 20px 0',
+    padding: '10rem 20px 0',
   },
 }));
 
