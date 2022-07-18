@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkhikun_blog=self.webpackChunkhikun_blog||[]).push([[609],{295:function(n,t,u){u.r(t);var e=u(7294),l=u(4577),a=u(4947),f=u(6097),i=u(3431),k=(0,f.Z)((function(){return(0,i.tZ)(e.Fragment,null,(0,i.tZ)(a.Z,null),(0,i.tZ)(l.Z,{text:"life page"}))}));t.default=k}}]);
+//# sourceMappingURL=component---src-pages-life-tsx-8a00acbbaf54d75e490f.js.map
