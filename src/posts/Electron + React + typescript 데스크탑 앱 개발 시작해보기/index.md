@@ -38,7 +38,7 @@ npm이 아닌 npx로 앱을 생성한다. npx를 사용하면 최신버전의 CR
 react 프로젝트가 성공적으로 생성 되었다면, 
 해당 앱 폴더로 이동하여 Electron과 각종 개발에 편의성을 주는 도구들을 설치한다.
 
-```
+```shell
 npm i electron-is-dev
 npm i electron electron-builder concurrently cross-env wait-on typescript --save-dev
 ```

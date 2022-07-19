@@ -8,7 +8,7 @@ import { Theme } from 'assets/styles/theme';
 import Navigation from 'components/common/Header/Navigation';
 import SmSizeBr from 'components/common/SmSizeBr';
 import { keyframes } from '@emotion/react';
-import Button from 'components/Button';
+
 type HeaderComponentProps = { theme: Theme };
 
 const HeaderWrapper = styled('div')(() => ({

@@ -45,10 +45,8 @@ const ContentArea = styled('section')(({ theme }) => ({
   },
   pre: {
     maxWidth: '100%',
-    code: {
-      maxWidth: '100%',
-      whiteSpace: 'break-spaces',
-    },
+    overflowX: 'auto',
+    fontSize: '14px',
   },
   img: {
     maxWidth: '100%',
@@ -56,6 +54,23 @@ const ContentArea = styled('section')(({ theme }) => ({
   ul: {
     margin: '0 0 0 1em',
     padding: 0,
+  },
+  h1: {
+    borderBottom: '1px solid var(--hr-color)',
+    padding: '0.8em 0 0.4em',
+    margin: '0 0 0.4em',
+    fontSize: '1.5em',
+    fontWeight: 700,
+  },
+  h2: {
+    fontSize: '1.4em',
+    fontWeight: 700,
+    margin: '0.8em 0',
+  },
+  h3: {
+    fontSize: '1.15em',
+    fontWeight: 600,
+    margin: '0.6em 0',
   },
 }));
 
