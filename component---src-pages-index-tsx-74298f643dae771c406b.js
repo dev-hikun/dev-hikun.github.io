@@ -1,2 +1,0 @@
-"use strict";(self.webpackChunkhikun_blog=self.webpackChunkhikun_blog||[]).push([[691],{6854:function(t,n,u){u.r(n);var l=u(7294),e=u(4577),a=u(4947),k=u(6097),r=u(3431),s=(0,k.Z)((function(){return(0,r.tZ)(l.Fragment,null,(0,r.tZ)(a.Z,null),(0,r.tZ)(e.Z,{text:"Hello Gatsby"}))}));n.default=s}}]);
-//# sourceMappingURL=component---src-pages-index-tsx-74298f643dae771c406b.js.map
