@@ -165,7 +165,7 @@ const Posts: React.FC<PostListProps> = props => {
               <PostItemHeader>
                 {item.image && (
                   <PostItemImageWrapper to={item.slug}>
-                    <GatsbyImage image={item.image} alt={item.title} />
+                    <GatsbyImage css={{ height: '100%', width: '100%' }} image={item.image} alt={item.title} />
                   </PostItemImageWrapper>
                 )}
                 <PostItemDescription to={item.slug}>
@@ -183,7 +183,11 @@ const Posts: React.FC<PostListProps> = props => {
                     variant="interface-body2"
                     themeColor="gray-500"
                     as="div"
-                    ellipsis={4}
+                    ellipsis={{
+                      default: 4,
+                      md: 3,
+                      sm: 2,
+                    }}
                     css={{ height: '88px' }}
                   >
                     {item.content}

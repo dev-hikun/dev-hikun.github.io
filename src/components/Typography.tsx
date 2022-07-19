@@ -178,34 +178,98 @@ const TypographyComponent = styled('span')(({ variant = 'interface-body1', md, s
   };
 });
 
+type TypographyEllipsis =
+  | number
+  | {
+      default: number;
+      xl?: number;
+      lg?: number;
+      md?: number;
+      sm?: number;
+    };
+
 export interface TypographyProps
   extends Omit<TypographyComponentProps, 'theme'>,
     React.DetailedHTMLProps<React.HTMLAttributes<HTMLSpanElement>, HTMLSpanElement> {
   theme?: Theme;
   children?: React.ReactNode;
   as?: React.ElementType<any> | undefined;
-  ellipsis?: number;
+  ellipsis?: TypographyEllipsis;
 }
 
-const ellipsisClass = (ellipsis: number) => css`
-  ${ellipsis > 0
-    ? `
-      width: 100%;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      ${
-        ellipsis === 1
-          ? `white-space: nowrap;`
-          : `-webkit-line-clamp: ${ellipsis};
-            white-space: normal;
-            text-align: left;
-            word-wrap: break-word;
-            display: -webkit-box;
-            -webkit-box-orient: vertical;`
-      }
-    `
-    : ``}
-`;
+const ellipsisNumberObject = (ellipsis: TypographyEllipsis) => {
+  const getEllipsisString = (n?: number, isFirst?: boolean) =>
+    (n || 0) > 0
+      ? `
+        ${
+          isFirst
+            ? `width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;`
+            : ``
+        }
+        ${
+          n === 1
+            ? `white-space: nowrap;`
+            : `-webkit-line-clamp: ${n || 2};
+              ${
+                isFirst
+                  ? `white-space: normal;
+              text-align: left;
+              word-wrap: break-word;
+              display: -webkit-box;
+              -webkit-box-orient: vertical;`
+                  : ``
+              }`
+        }
+      `
+      : ``;
+
+  if (typeof ellipsis === 'number') return getEllipsisString(ellipsis, true);
+
+  type MediaQuery = keyof typeof ellipsis;
+
+  return (Object.keys(ellipsis) as MediaQuery[]).reduce((obj: { [x: string]: string }, key) => {
+    const value = ellipsis[key];
+    if (key === 'default') {
+      return {
+        ...obj,
+      };
+    }
+
+    if (value) {
+      return {
+        ...obj,
+        [mixins.breakpoints[key]]: getEllipsisString(value),
+      };
+    }
+    return obj;
+  }, {});
+};
+
+const ellipsisClass = (ellipsis: TypographyEllipsis) => {
+  typeof ellipsisClass !== 'number' && console.log(ellipsisNumberObject(ellipsis));
+  return css``;
+  // return css`
+  //   // ${ellipsis > 0
+  //   //   ? `
+  //   //     width: 100%;
+  //   //     overflow: hidden;
+  //   //     text-overflow: ellipsis;
+  //   //     ${
+  //   //       ellipsis === 1
+  //   //         ? `white-space: nowrap;`
+  //   //         : `-webkit-line-clamp: ${ellipsis};
+  //   //           white-space: normal;
+  //   //           text-align: left;
+  //   //           word-wrap: break-word;
+  //   //           display: -webkit-box;
+  //   //           -webkit-box-orient: vertical;`
+  //   //     }
+  //   //   `
+  //   //   : ``}
+  // `;
+};
 
 const Typography: React.FC<TypographyProps> = ({
   variant,
