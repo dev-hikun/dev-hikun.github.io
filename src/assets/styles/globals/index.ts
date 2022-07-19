@@ -11,6 +11,8 @@ const colorByTheme = (theme: Theme) => `
   --text-hover-color: ${theme.color.textHover || ''};
   --hr-color: ${theme.color.hr || ''};
   --content-background-color: ${theme.color.contentBackground || ''};
+  --blockquote-color: ${theme.color.blockquote || ''};
+  --blockquote-background-color: ${theme.color.blockquoteBackground || ''};
   .text-text: { color: ${theme.color.text || ''} };
 `;
 

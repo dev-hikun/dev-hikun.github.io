@@ -3,6 +3,7 @@ title: Electron + React + Typescript 데스크탑 앱 개발 시작해보기
 date: '2021-01-14'
 slug: '/posts/Electron + React + Typescript 데스크탑 앱 개발 시작해보기'
 tags: ['React', 'Typescript', 'Electron']
+category: '개발'
 featuredImage: './images/electron-logo.png'
 ---
 회사에서 윈도우프로그램과 웹 소켓으로 통신하는 데스크탑 프로그램을 만드는 프로젝트를 맡게 되었다.
@@ -30,7 +31,7 @@ concurrently: 5.3.0
 npx create-react-app 앱이름 --template typescript
 ```
 npm이 아닌 npx로 앱을 생성한다. npx를 사용하면 최신버전의 CRA로 React가 실행되는 환경을 만들 수 있다.
-우리는 타입스크립트를 사용할 것이기 때문에 뒤에 뒤에 _`--template typescript`_는 필수.
+우리는 타입스크립트를 사용할 것이기 때문에 뒤에 뒤에 `--template typescript`는 필수.
 > [참조: npm과 npx의 차이점](https://velog.io/@kimkyeseung/%EB%B2%88%EC%97%AD-%EA%B7%B8%EB%9E%98-npx-npm%EB%A7%90%EA%B3%A0-%EC%B0%A8%EC%9D%B4%EC%A0%90-%EC%84%A4%EB%AA%85)
 
 # 2. Electron 설치

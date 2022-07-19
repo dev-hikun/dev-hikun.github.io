@@ -77,16 +77,37 @@ const HeaderTextArea = styled('div')(({ theme }: HeaderComponentProps) => ({
   },
 }));
 
-const Tags = styled('div')(() => ({
-  display: 'flex',
+const Title = styled(Typography)(() => ({
+  [mixins.breakpoints.sm]: {
+    margin: '3px 0 5px',
+  },
 }));
 
-const Tag = styled(Button)(() => ({
+const Description = styled(Typography)(() => ({
+  [mixins.breakpoints.sm]: {
+    margin: '0 0 20px',
+  },
+}));
+
+const Tags = styled('div')(() => ({
+  display: 'flex',
+  [mixins.breakpoints.sm]: {
+    marginBottom: '5px',
+  },
+}));
+
+const Tag = styled('span')(() => ({
   padding: '2px 5px',
+  border: '1px solid white',
+  background: 'rgba(255,255,255,.05)',
+  borderRadius: '8px',
   ':not(:first-of-type)': {
     marginLeft: 5,
   },
   fontSize: '0.8rem',
+  [mixins.breakpoints.sm]: {
+    fontSize: '0.65rem',
+  },
   '::before': {
     display: 'inline',
     content: '"#"',
@@ -132,28 +153,17 @@ const Header: React.FC<HeaderProps> = ({
       <Navigation className={useClassName([navigationClassName])} />
       <HeaderComponent className={useClassName([headerClassName])}>
         <HeaderTextArea>
+          <Title themeColor="gray-100" variant="headline-h1" md="headline-h2" sm="headline-h4" as="h1">
+            {title}
+          </Title>
           {tags.length !== 0 && (
             <Tags>
               {tags.map(tag => (
-                <Tag variant="link" themeColor="gray" key={tag}>
-                  {tag}
-                </Tag>
+                <Tag key={tag}>{tag}</Tag>
               ))}
             </Tags>
           )}
-          <Typography
-            css={{
-              animation: `${keyframes`from { width: 1% } to { width: 100% }`} 0.5 ease-out`,
-            }}
-            themeColor="gray-100"
-            variant="headline-h1"
-            md="headline-h2"
-            sm="headline-h3"
-            as="h1"
-          >
-            {title}
-          </Typography>
-          <Typography
+          <Description
             themeColor="gray-300"
             variant="subhead-subhead4"
             md="subhead-subhead6"
@@ -161,7 +171,7 @@ const Header: React.FC<HeaderProps> = ({
             as="h3"
           >
             {description}
-          </Typography>
+          </Description>
         </HeaderTextArea>
         <HeaderImageWrap>
           {image && src ? (

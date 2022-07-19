@@ -9,6 +9,7 @@ type AdditinalColorKey =
   | 'hr'
   | 'navBackground'
   | 'blockquote'
+  | 'blockquoteBackground'
   | 'contentBackground';
 export interface Theme {
   color: Record<AdditinalColorKey, React.CSSProperties['color']> & typeof colors;
@@ -36,6 +37,7 @@ export const light: Theme = {
     link: ColorDic['blue-500'],
     hr: ColorDic['gray-300'],
     blockquote: ColorDic['gray-400'],
+    blockquoteBackground: ColorDic['gray-300'],
     contentBackground: ColorDic['white'],
     ...colors,
   },
@@ -56,6 +58,7 @@ export const dark: Theme = {
     background: ColorDic['black-100'],
     navBackground: ColorDic['black-90'],
     blockquote: ColorDic['gray-600'],
+    blockquoteBackground: ColorDic['gray-900'],
     hr: ColorDic['gray-800'],
     contentBackground: ColorDic['gray-900'],
   },
