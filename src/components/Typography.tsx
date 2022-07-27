@@ -4,7 +4,6 @@ import { ThemeColorVariant, ThemeSemanticColorKey } from 'assets/styles/theme/co
 import mixins from 'assets/styles/mixins';
 import { Theme } from 'assets/styles/theme';
 import useUtils from 'hooks/useUtils';
-import { css } from '@emotion/react';
 
 const typographyVariantDict = {
   headline: ['h1', 'h2', 'h3', 'h4', 'h5'] as const,
@@ -197,78 +196,47 @@ export interface TypographyProps
   ellipsis?: TypographyEllipsis;
 }
 
-const ellipsisNumberObject = (ellipsis: TypographyEllipsis) => {
-  const getEllipsisString = (n?: number, isFirst?: boolean) =>
-    (n || 0) > 0
-      ? `
-        ${
-          isFirst
-            ? `width: 100%;
-        overflow: hidden;
-        text-overflow: ellipsis;`
-            : ``
+const getEllipsisString = (n?: number) => {
+  const line = n || 0;
+  const defaultString = {
+    width: '100%',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    ...(line > 1
+      ? {
+          whiteSpace: 'normal',
+          textAlign: 'left',
+          wordWrap: 'break-word',
+          display: '-webkit-box',
+          '-webkit-box-orient': 'vertical',
         }
-        ${
-          n === 1
-            ? `white-space: nowrap;`
-            : `-webkit-line-clamp: ${n || 2};
-              ${
-                isFirst
-                  ? `white-space: normal;
-              text-align: left;
-              word-wrap: break-word;
-              display: -webkit-box;
-              -webkit-box-orient: vertical;`
-                  : ``
-              }`
+      : {}),
+  };
+
+  return {
+    ...defaultString,
+    ...(line === 1
+      ? {
+          whiteSpace: 'nowrap',
+          display: 'block',
+          textAlign: 'initial',
+          wordWrap: 'initial',
+          '-webkit-box-orient': 'initial',
+          '-webkit-line-clamp': 'initial',
         }
-      `
-      : ``;
-
-  if (typeof ellipsis === 'number') return getEllipsisString(ellipsis, true);
-
-  type MediaQuery = keyof typeof ellipsis;
-
-  return (Object.keys(ellipsis) as MediaQuery[]).reduce((obj: { [x: string]: string }, key) => {
-    const value = ellipsis[key];
-    if (key === 'default') {
-      return {
-        ...obj,
-      };
-    }
-
-    if (value) {
-      return {
-        ...obj,
-        [mixins.breakpoints[key]]: getEllipsisString(value),
-      };
-    }
-    return obj;
-  }, {});
+      : { '-webkit-line-clamp': `${line}` }),
+  };
 };
 
-const ellipsisClass = (ellipsis: TypographyEllipsis) => {
-  typeof ellipsisClass !== 'number' && console.log(ellipsisNumberObject(ellipsis));
-  return css``;
-  // return css`
-  //   // ${ellipsis > 0
-  //   //   ? `
-  //   //     width: 100%;
-  //   //     overflow: hidden;
-  //   //     text-overflow: ellipsis;
-  //   //     ${
-  //   //       ellipsis === 1
-  //   //         ? `white-space: nowrap;`
-  //   //         : `-webkit-line-clamp: ${ellipsis};
-  //   //           white-space: normal;
-  //   //           text-align: left;
-  //   //           word-wrap: break-word;
-  //   //           display: -webkit-box;
-  //   //           -webkit-box-orient: vertical;`
-  //   //     }
-  //   //   `
-  //   //   : ``}
-  // `;
+const ellipsisNumberObject = (ellipsis: TypographyEllipsis) => {
+  if (typeof ellipsis === 'number') return getEllipsisString(ellipsis);
+  type MediaQuery = keyof typeof ellipsis;
+  return (Object.keys(ellipsis) as MediaQuery[]).reduce((res: Record<string, any>, key) => {
+    const value: number | undefined = ellipsis[key];
+    if (key === 'default') return getEllipsisString(value);
+    if (value) return { ...res, [mixins.breakpoints[key]]: getEllipsisString(value) };
+    return res;
+  }, {});
 };
 
 const Typography: React.FC<TypographyProps> = ({
@@ -281,7 +249,7 @@ const Typography: React.FC<TypographyProps> = ({
   ...props
 }) => {
   const { useClassName } = useUtils();
-  const ellipsisCss = ellipsis ? ellipsisClass(Number(ellipsis)) : {};
+  const ellipsisCss = ellipsis ? ellipsisNumberObject(ellipsis) : {};
   return (
     <TypographyComponent
       css={Object.assign(ellipsisCss, css, {})}

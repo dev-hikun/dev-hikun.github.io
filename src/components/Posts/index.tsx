@@ -173,8 +173,11 @@ const Posts: React.FC<PostListProps> = props => {
                     className="post-title"
                     variant="subhead-subhead3"
                     as="h3"
-                    ellipsis={2}
-                    css={{ height: '48px' }}
+                    ellipsis={{
+                      default: 2,
+                      sm: 1,
+                    }}
+                    css={{ maxHeight: '48px', [mixins.breakpoints.sm]: { maxHeight: '24px' } }}
                   >
                     {item.title}
                   </Typography>
@@ -188,7 +191,13 @@ const Posts: React.FC<PostListProps> = props => {
                       md: 3,
                       sm: 2,
                     }}
-                    css={{ height: '88px' }}
+                    css={{
+                      maxHeight: '88px',
+                      [mixins.breakpoints.md]: {
+                        maxHeight: '66px',
+                      },
+                      [mixins.breakpoints.sm]: { maxHeight: '44px' },
+                    }}
                   >
                     {item.content}
                   </Typography>
