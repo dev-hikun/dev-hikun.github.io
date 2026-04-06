@@ -40,3 +40,900 @@
     top: 0; left: 0; right: 0; bottom: 0;
     background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
   }
+  .hero-content { position: relative; z-index: 1; max-width: 600px; margin: 0 auto; }
+  .hero-icon { font-size: 40px; margin-bottom: 10px; }
+  .hero h1 { font-size: 26px; font-weight: 700; margin-bottom: 4px; }
+  .hero-sub { font-size: 14px; opacity: 0.7; font-weight: 300; margin-bottom: 16px; }
+  .hero-info { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+  .hero-chip {
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 20px;
+    padding: 5px 14px;
+    font-size: 12px;
+  }
+
+  /* ── Flights ── */
+  .flight-section { margin: 24px auto; max-width: 720px; padding: 0 20px; }
+  .flight-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .flight-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px;
+    text-align: center;
+  }
+  .flight-label { font-size: 10px; text-transform: uppercase; letter-spacing: 1.5px; color: var(--text-light); margin-bottom: 6px; }
+  .flight-number { font-size: 20px; font-weight: 700; }
+  .flight-route { font-size: 12px; color: var(--text-light); margin: 4px 0; }
+  .flight-route .arrow { margin: 0 4px; opacity: 0.4; }
+  .flight-time { font-size: 13px; font-weight: 500; }
+
+  /* ── Tabs ── */
+  .tab-bar {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 6px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--bg);
+    padding-top: 12px;
+    padding-bottom: 12px;
+  }
+  .tab-btn {
+    border: none;
+    border-radius: 10px;
+    padding: 10px 8px;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 600;
+    color: white;
+    opacity: 0.45;
+    transition: all 0.2s ease;
+    text-align: center;
+    line-height: 1.3;
+  }
+  .tab-btn:hover { opacity: 0.7; }
+  .tab-btn.active { opacity: 1; box-shadow: 0 4px 12px rgba(0,0,0,0.2); transform: translateY(-1px); }
+  .tab-btn[data-day="1"] { background: linear-gradient(135deg, #4a6d8c, #5b8fb5); }
+  .tab-btn[data-day="2"] { background: linear-gradient(135deg, #4a7a4a, #6aab6a); }
+  .tab-btn[data-day="3"] { background: linear-gradient(135deg, #b8742e, #daa050); }
+  .tab-btn[data-day="4"] { background: linear-gradient(135deg, #7a4a6a, #a06a90); }
+  .tab-btn .tab-date { display: block; font-weight: 300; font-size: 10px; opacity: 0.85; margin-top: 2px; }
+
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  /* ── Day Header ── */
+  .day-section { margin: 0 auto; max-width: 720px; padding: 0 20px; }
+  .day-header {
+    border-radius: 14px;
+    padding: 22px 24px;
+    margin-bottom: 14px;
+    color: white;
+    position: relative;
+    overflow: hidden;
+  }
+  .day-header.day1 { background: linear-gradient(135deg, #4a6d8c, #5b8fb5); }
+  .day-header.day2 { background: linear-gradient(135deg, #4a7a4a, #6aab6a); }
+  .day-header.day3 { background: linear-gradient(135deg, #b8742e, #daa050); }
+  .day-header.day4 { background: linear-gradient(135deg, #7a4a6a, #a06a90); }
+  .day-number { font-size: 11px; text-transform: uppercase; letter-spacing: 2px; opacity: 0.8; margin-bottom: 3px; }
+  .day-title { font-size: 18px; font-weight: 700; margin-bottom: 2px; }
+  .day-title-jp { font-size: 13px; font-weight: 300; opacity: 0.85; }
+  .day-weather { position: absolute; top: 18px; right: 20px; font-size: 28px; }
+
+  /* ── Timeline ── */
+  .timeline { position: relative; padding-left: 24px; }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 6px; top: 8px; bottom: 8px;
+    width: 2px;
+    background: var(--border);
+  }
+  .timeline-item {
+    position: relative;
+    margin-bottom: 4px;
+    padding: 12px 16px;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+  }
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -22px; top: 18px;
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    border: 2px solid var(--border);
+    background: var(--card-bg);
+  }
+  .timeline-item.highlight::before { border-color: #e07038; background: #e07038; }
+  .timeline-item.meal::before { border-color: #d44; background: #d44; }
+  .timeline-item.move::before { border-color: #888; background: #f5f5f5; }
+  .timeline-item.bar::before { border-color: #8b5cf6; background: #8b5cf6; }
+  .timeline-item.rest::before { border-color: #38bdf8; background: #38bdf8; }
+  .timeline-item.rest { background: #f0f8ff; border-color: #d0e8f8; }
+
+  .tl-time { font-size: 12px; font-weight: 700; color: var(--text-light); letter-spacing: 0.5px; margin-bottom: 2px; }
+  .tl-title { font-size: 15px; font-weight: 600; margin-bottom: 2px; }
+  .tl-title-jp { font-size: 13px; font-weight: 300; color: var(--text-light); margin-bottom: 4px; }
+  .tl-desc { font-size: 13px; color: var(--text-light); line-height: 1.6; }
+  .tl-desc .tag {
+    display: inline-block;
+    border-radius: 4px;
+    padding: 1px 7px;
+    font-size: 11px;
+    font-weight: 500;
+    margin: 2px 2px 2px 0;
+  }
+  .tag { background: #f0ebe4; color: #7a6a55; }
+  .tag.food { background: #fde8e8; color: #b44; }
+  .tag.spot { background: #e8eef5; color: #456; }
+  .tag.shop { background: #eef5e8; color: #465; }
+
+  /* ── Dark card (restaurants / bars) ── */
+  .dark-card {
+    border-radius: 10px;
+    padding: 14px 16px;
+    margin-top: 6px;
+  }
+  .dark-card.bar-theme {
+    background: linear-gradient(135deg, #1e1b2e, #2a2340);
+    border: 1px solid #3d3560;
+    color: #e0d8f0;
+  }
+  .dark-card.bar-theme .dc-name { color: #f0e8ff; }
+  .dark-card.bar-theme .dc-name-jp { color: #b8a8d0; }
+  .dark-card.bar-theme .dc-detail { color: #a898c0; }
+  .dark-card.bar-theme .dc-detail strong { color: #d0c0f0; }
+
+  .dark-card.food-theme {
+    background: linear-gradient(135deg, #2e1e1e, #40282a);
+    border: 1px solid #603030;
+    color: #e0d0c8;
+  }
+  .dark-card.food-theme .dc-name { color: #ffddcc; }
+  .dark-card.food-theme .dc-name-jp { color: #c0a898; }
+  .dark-card.food-theme .dc-detail { color: #c0a898; }
+  .dark-card.food-theme .dc-detail strong { color: #f0d0c0; }
+
+  .dc-name { font-size: 15px; font-weight: 600; margin-bottom: 2px; }
+  .dc-name-jp { font-size: 13px; font-weight: 300; margin-bottom: 6px; }
+  .dc-detail { font-size: 12px; line-height: 1.6; }
+
+  /* ── Tip Box ── */
+  .tip-box {
+    background: #fffcf0;
+    border: 1px solid #f0e8c8;
+    border-left: 3px solid #dab34a;
+    border-radius: 8px;
+    padding: 14px 16px;
+    margin: 12px 0 8px;
+    font-size: 13px;
+    line-height: 1.6;
+    color: #665520;
+  }
+  .tip-box b { margin-right: 4px; }
+
+  /* ── Info Section ── */
+  .info-section { margin: 40px auto; max-width: 720px; padding: 0 20px; }
+  .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .info-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 18px;
+  }
+  .info-card h3 { font-size: 14px; font-weight: 600; margin-bottom: 8px; }
+  .info-card ul { list-style: none; font-size: 12px; color: var(--text-light); }
+  .info-card li { padding: 2px 0; }
+  .info-card li::before { content: '· '; color: #bbb; }
+
+  .footer { text-align: center; padding: 40px 20px; font-size: 12px; color: #bbb; }
+
+  @media (max-width: 480px) {
+    .flight-cards { grid-template-columns: 1fr; }
+    .info-grid { grid-template-columns: 1fr; }
+    .hero h1 { font-size: 22px; }
+    .tab-btn { font-size: 11px; padding: 8px 4px; }
+  }
+  @media print {
+    .tab-bar { position: static; }
+    .tab-panel { display: block !important; page-break-before: always; }
+    .tab-panel:first-of-type { page-break-before: auto; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ━━ Hero ━━ -->
+<div class="hero">
+  <div class="hero-content">
+    <div class="hero-icon">🇹🇼</div>
+    <h1>대만 여행 | 台湾旅行</h1>
+    <div class="hero-sub">2026. 4. 7 (火) — 4. 10 (金) · 3泊4日</div>
+    <div class="hero-info">
+      <span class="hero-chip">소테츠 그랜드 프레사 시먼</span>
+      <span class="hero-chip">相鉄グランドフレッサ 西門</span>
+    </div>
+  </div>
+</div>
+
+<!-- ━━ Flights ━━ -->
+<div class="flight-section">
+  <div class="flight-cards">
+    <div class="flight-card">
+      <div class="flight-label">출발 / 出発</div>
+      <div class="flight-number">OZ711</div>
+      <div class="flight-route">인천 ICN <span class="arrow">→</span> 타오위안 TPE</div>
+      <div class="flight-time">08:35 → 10:45 (현지시간)</div>
+    </div>
+    <div class="flight-card">
+      <div class="flight-label">귀국 / 帰国</div>
+      <div class="flight-number">OZ714</div>
+      <div class="flight-route">타오위안 TPE <span class="arrow">→</span> 인천 ICN</div>
+      <div class="flight-time">17:10 출발 (現地時間)</div>
+    </div>
+  </div>
+</div>
+
+<!-- ━━ Tab Bar ━━ -->
+<div class="tab-bar">
+  <button class="tab-btn active" data-day="1" onclick="switchTab(1)">Day 1 🌧️<span class="tab-date">4/7 화</span></button>
+  <button class="tab-btn" data-day="2" onclick="switchTab(2)">Day 2 ☀️<span class="tab-date">4/8 수</span></button>
+  <button class="tab-btn" data-day="3" onclick="switchTab(3)">Day 3 ☀️<span class="tab-date">4/9 목</span></button>
+  <button class="tab-btn" data-day="4" onclick="switchTab(4)">Day 4 ✈️<span class="tab-date">4/10 금</span></button>
+</div>
+
+<!-- ━━━━━━━━━━━━━━ DAY 1 ━━━━━━━━━━━━━━ -->
+<div class="tab-panel active" id="day1">
+<div class="day-section">
+  <div class="day-header day1">
+    <div class="day-number">Day 1 — 4/7 (화/火)</div>
+    <div class="day-title">도착 + 고궁박물관 + 스린야시장</div>
+    <div class="day-title-jp">到着 → 故宮博物院 → 士林夜市</div>
+    <div class="day-weather">🌧️</div>
+  </div>
+
+  <div class="timeline">
+    <div class="timeline-item move">
+      <div class="tl-time">10:45</div>
+      <div class="tl-title">타오위안 공항 도착 / 桃園空港 到着</div>
+      <div class="tl-desc">입국심사 + 수하물 약 30분 / 入国審査＋荷物受取 約30分<br><span class="tag">이지카드(悠遊卡) 공항 편의점에서 구매!</span></div>
+    </div>
+
+    <div class="timeline-item move">
+      <div class="tl-time">11:30</div>
+      <div class="tl-title">공항MRT → 시먼역 / 空港MRT → 西門駅</div>
+      <div class="tl-desc">공항 → 타이베이역(35분) 환승 → 시먼역(5분)<br>空港 → 台北駅(35分) 乗換 → 西門駅(5分)</div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="tl-time">12:15</div>
+      <div class="tl-title">호텔 체크인 / 짐 맡기기</div>
+      <div class="tl-title-jp">ホテルチェックイン / 荷物預け</div>
+    </div>
+
+    <div class="timeline-item meal">
+      <div class="tl-time">12:30</div>
+      <div class="tl-title">시먼 주변 점심 / 西門エリアでランチ</div>
+      <div class="tl-desc">
+        <span class="tag food">아종미엔셴 (阿宗麵線) / とろみそうめん</span>
+        <span class="tag food">총좌빙 (蔥抓餅) / ネギパイ</span>
+        <br>시먼 메인 거리에서 가볍게! / 西門メインストリートで軽く！
+      </div>
+    </div>
+
+    <div class="timeline-item move">
+      <div class="tl-time">13:30</div>
+      <div class="tl-title">MRT 시먼 → 스린역 → 버스 → 고궁</div>
+      <div class="tl-title-jp">MRT 西門 → 士林駅 → バス → 故宮（約40分）</div>
+      <div class="tl-desc">
+        <strong>1)</strong> MRT 시먼 → 스린역 (약 25분)<br>
+        <strong>2)</strong> 스린역 <strong>1번 출구</strong> → 도보 1분 → 중정로(中正路) 버스 정류장<br>
+        <strong>3)</strong> <span class="tag spot">홍30 (紅30) 버스 추천!</span> 고궁 본관 B1 직통 (약 15분)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;대안: 255, 300, 304, 815번 (고궁 아래 광장 하차, 계단 올라감)<br><br>
+        <strong>1)</strong> MRT西門 → 士林駅（約25分）<br>
+        <strong>2)</strong> 士林駅 <strong>1番出口</strong> → 徒歩1分 → 中正路バス停<br>
+        <strong>3)</strong> <strong>紅30バスがおすすめ！</strong>故宮本館B1直通（約15分）<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;他: 255, 300, 304, 815番（故宮下の広場で下車、階段あり）
+      </div>
+    </div>
+
+    <div class="timeline-item highlight">
+      <div class="tl-time">14:15 — 16:30</div>
+      <div class="tl-title">국립 고궁박물관 / 国立故宮博物院</div>
+      <div class="tl-desc">
+        비 오는 날 실내 관광 최적! / 雨の日は室内観光がベスト！<br>
+        <span class="tag spot">취옥배추 (翠玉白菜)</span>
+        <span class="tag spot">육형석 (肉形石)</span>
+        <span class="tag">입장료 NT$350</span>
+      </div>
+    </div>
+
+    <div class="timeline-item move">
+      <div class="tl-time">16:40</div>
+      <div class="tl-title">고궁 → 버스 → 젠탄역 (스린야시장)</div>
+      <div class="tl-title-jp">故宮 → バス → 剣潭駅（士林夜市）</div>
+      <div class="tl-desc">
+        고궁 나와서 홍30 or 255 타고 <strong>젠탄역(剣潭)</strong> 하차 (~15분)<br>
+        故宮から紅30 or 255に乗り<strong>剣潭駅</strong>で下車（〜15分）<br>
+        <span class="tag">젠탄역이 스린역보다 야시장에 더 가까움!</span>
+      </div>
+    </div>
+
+    <div class="timeline-item highlight">
+      <div class="tl-time">17:00 — 19:30</div>
+      <div class="tl-title">스린 야시장 / 士林夜市</div>
+      <div class="tl-title-jp">地下美食区は屋根あり、雨でもOK！</div>
+      <div class="tl-desc">
+        <span class="tag food">다지파이 (大雞排) / ジャンボフライドチキン</span>
+        <span class="tag food">성지엔바오 (生煎包) / 焼き小籠包</span>
+        <span class="tag food">허쯔지엔 (蚵仔煎) / 牡蠣オムレツ</span>
+        <span class="tag food">망고빙수 (芒果冰) / マンゴーかき氷</span>
+      </div>
+    </div>
+
+    <div class="timeline-item move">
+      <div class="tl-time">19:30</div>
+      <div class="tl-title">MRT 젠탄 → 시먼 (25분) / 剣潭 → 西門</div>
+    </div>
+
+    <div class="timeline-item rest">
+      <div class="tl-time">20:00 — 21:00</div>
+      <div class="tl-title">호텔 휴식 / ホテルで休憩</div>
+      <div class="tl-title-jp">到着日で疲れてるはず。一旦休もう！</div>
+      <div class="tl-desc">
+        도착일이라 피곤할 수 있음. 호텔에서 한숨 돌리기<br>
+        씻고 옷 갈아입고 나가기! / シャワー浴びて着替えて出発！<br>
+        <span class="tag">편의점에서 대만 맥주(台灣啤酒) 사서 방에서 한캔도 OK!</span>
+      </div>
+    </div>
+
+    <div class="timeline-item meal">
+      <div class="tl-time">21:00</div>
+      <div class="tl-title">시먼 야식 타임! / 西門で夜食！</div>
+      <div class="tl-title-jp">士林で食べ足りなかったらここで！</div>
+      <div class="tl-desc">
+        비 오는 날엔 따뜻한 국물! / 雨の日は温かいスープ！
+        <div class="dark-card food-theme">
+          <div class="dc-name">홍사부 우육면 (洪師父牛肉麵) / 牛肉麺の名店</div>
+          <div class="dc-detail">
+            대만 우육면 대회 5회 수상! 시먼역 도보 7분<br>
+            台湾牛肉麺コンテスト5回受賞！西門駅徒歩7分<br>
+            <strong>홍샤오 우육면 (紅燒牛肉麵) / 煮込み牛肉麺 ~NT$220</strong>
+          </div>
+        </div>
+        <div class="dark-card food-theme" style="margin-top:6px">
+          <div class="dc-name">천천리 (天天利美食坊) / 24時間ローカル食堂</div>
+          <div class="dc-detail">
+            현지인 단골 24시간 식당. 시먼 메인거리 안쪽<br>
+            地元民御用達の24時間食堂。西門メインストリート裏手<br>
+            <strong>루로우판 (滷肉飯) / ルーローハン NT$40 · 반숙계란 필수추가!</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="timeline-item bar">
+      <div class="tl-time">22:00 ~</div>
+      <div class="tl-title">시먼 첫날밤 한잔 / 西門で初日の一杯</div>
+      <div class="tl-desc">
+        <div class="dark-card bar-theme">
+          <div class="dc-name">HANKO 60 (漢口60) — 시네마 스피크이지</div>
+          <div class="dc-name-jp">映画館テーマの隠れ家バー</div>
+          <div class="dc-detail">
+            <strong>주소:</strong> 漢口街二段60號 (시먼역 도보 5분)<br>
+            <strong>영업:</strong> 일~목 20:00-02:00 / 금토 20:00-03:00<br>
+            옛 극장 매표소 버튼 → 비밀문 오픈!<br>
+            映画の切符売場のボタン → 秘密のドアが開く！<br>
+            <strong>칵테일 NT$350~500</strong>
+          </div>
+        </div>
+        <div class="dark-card bar-theme" style="margin-top:6px">
+          <div class="dc-name">시먼홍로우 뒤편 야외바 / 西門紅樓の裏バーストリート</div>
+          <div class="dc-name-jp">カジュアルに飲むならここ！</div>
+          <div class="dc-detail">
+            가볍게 야외에서 맥주+안주 / 屋外で気軽にビール＆おつまみ<br>
+            <strong>맥주 NT$150~ / 칵테일 NT$250~</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tip-box">
+    <b>TIP</b> 고궁+스린은 같은 북쪽 권역 → 이동 효율적. 둘 다 비 와도 OK!<br>
+    故宮＋士林は同じ北エリア → 移動効率◎。雨でもOK！
+  </div>
+</div>
+</div>
+
+<!-- ━━━━━━━━━━━━━━ DAY 2 ━━━━━━━━━━━━━━ -->
+<div class="tab-panel" id="day2">
+<div class="day-section">
+  <div class="day-header day2">
+    <div class="day-number">Day 2 — 4/8 (수/水)</div>
+    <div class="day-title">예류 · 스펀 · 지우펀 투어</div>
+    <div class="day-title-jp">野柳・十分・九份 ツアー</div>
+    <div class="day-weather">☀️</div>
+  </div>
+
+  <div class="timeline">
+    <div class="timeline-item meal">
+      <div class="tl-time">08:30</div>
+      <div class="tl-title">시먼 근처 아침 / 西門エリアで朝食</div>
+      <div class="tl-desc">
+        <span class="tag food">단빙 (蛋餅) / 台湾クレープ</span>
+        <span class="tag food">더우장 (豆漿) / 豆乳</span>
+        <br>든든히 먹기! 점심이 14시! / しっかり食べる！昼食は14時！<br>
+        <span class="tag">편의점에서 간식+물 미리 사가기! 버스에서 먹을 수 있음</span><br>
+        <span class="tag">コンビニでおやつ＆水を買っておく！バスで食べられる</span>
+      </div>
+    </div>
+
+    <div class="timeline-item highlight">
+      <div class="tl-time">09:30</div>
+      <div class="tl-title">시먼역 5번 출구 집합 / 西門駅5番出口 集合</div>
+      <div class="tl-title-jp">ツアーバス乗車</div>
+    </div>
+
+    <div class="timeline-item highlight">
+      <div class="tl-time">11:00 — 12:00</div>
+      <div class="tl-title">예류 지질공원 / 野柳地質公園</div>
+      <div class="tl-desc">
+        <span class="tag spot">여왕머리바위 (女王頭)</span>
+        관광 위주, 간식 정도만 가능 / 観光メイン、軽食のみ
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="tl-time">12:50 — 13:50</div>
+      <div class="tl-title">스펀 폭포 / 十分瀑布</div>
+      <div class="tl-desc">폭포까지 도보 15분 왕복 / 滝まで徒歩15分往復</div>
+    </div>
+
+    <div class="timeline-item meal">
+      <div class="tl-time">14:00 — 15:00</div>
+      <div class="tl-title">스펀 옛거리 — 여기서 점심! / 十分老街 — ここで昼食！</div>
+      <div class="tl-desc">
+        <span class="tag food">다창바오샤오창 (大腸包小腸) / もち米ソーセージ</span>
+        <span class="tag food">화생쥐안빙치린 (花生卷冰淇淋) / ピーナッツアイスクレープ</span>
+        <span class="tag food">지파이 (雞排) / フライドチキン</span>
+        <br>
+        <span class="tag spot">천등 날리기 (天燈)</span>
+        소원 적어서 날리기! / 願い事を書いてランタンを飛ばす！
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="tl-time">15:50 — 16:50</div>
+      <div class="tl-title">진과스 / 金瓜石</div>
+      <div class="tl-desc">광산 마을 산책, 간식 / 鉱山の村を散策</div>
+    </div>
+
+    <div class="timeline-item meal">
+      <div class="tl-time">17:00 — 19:00</div>
+      <div class="tl-title">지우펀 — 저녁식사! / 九份 — ここで夕食！</div>
+      <div class="tl-title-jp">『千と千尋の神隠し』の街</div>
+      <div class="tl-desc">
+        <span class="tag food">위위안 (芋圓) 꼭 먹기! / タロイモ団子</span>
+        <span class="tag food">위완 (魚丸) / 魚のつみれ</span>
+        <span class="tag food">차오쯔궈 (草仔粿) / よもぎ餅</span>
+        <span class="tag food">홍조우로우위안 (紅糟肉圓) / 紅麹肉団子</span>
+        <br>해질녘 홍등 사진! / 夕暮れの赤提灯が写真スポット！
+      </div>
+    </div>
+
+    <div class="timeline-item highlight">
+      <div class="tl-time">20:00 — 21:30</div>
+      <div class="tl-title">라오허제 야시장 하차! / 饒河夜市で下車！</div>
+      <div class="tl-title-jp">入口→出口 一直線600m。片道で食べ歩き、反対側で戻る！</div>
+      <div class="tl-desc">
+        <strong>입구 (쑹산역 쪽) / 入口（松山駅側）:</strong><br>
+        <span class="tag food">후자오빙 (福州世祖胡椒餅) 미슐랭! / ミシュラン！並ぶ価値あり</span>
+        <br>→ 입구 바로 오른쪽, 항상 긴 줄. 먼저 줄서기!<br>
+        → 入口すぐ右、常に行列。まず並ぶ！<br><br>
+        <strong>야시장 안쪽 / 夜市の中:</strong><br>
+        <span class="tag food">약선갈비탕 (陳董藥燉排骨) 미슐랭! / 薬膳スペアリブ</span>
+        <span class="tag food">취두부 (臭豆腐) 바삭튀김 / 揚げ臭豆腐</span>
+        <span class="tag food">대왕오징어 (大魷魚) / 巨大イカフライ</span>
+        <span class="tag food">미엔셴 (麵線) / とろみそうめん</span>
+        <span class="tag food">고구마볼 (地瓜球) / さつまいもボール</span>
+        <span class="tag food">루웨이 (滷味) 골라담기 / 煮込み盛り合わせ</span>
+        <br><br>맥주 사서 들고 먹기 OK! / ビール片手に食べ歩きOK！<br>
+        MRT 쑹산역 → 시먼 (약 20분) / 松山駅 → 西門（約20分）
+      </div>
+    </div>
+
+    <div class="timeline-item bar">
+      <div class="tl-time">22:00 ~</div>
+      <div class="tl-title">투어 후 한잔 / ツアー後の一杯</div>
+      <div class="tl-desc">
+        <div class="dark-card bar-theme">
+          <div class="dc-name">시먼홍로우 뒤편 야외바 / 西門紅樓の裏バーストリート</div>
+          <div class="dc-name-jp">疲れた体に冷たいビール！</div>
+          <div class="dc-detail">
+            하루종일 투어 후 호텔 근처에서 가볍게 마무리<br>
+            一日中ツアーの後、ホテル近くで軽く締め<br>
+            <strong>맥주 NT$150~</strong> / 호텔 도보 5분
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tip-box">
+    <b>TIP</b> 아침을 꼭 든든히! 11:00~14:00은 먹을 곳 없음. 스펀(14시)이 첫 식사 기회!<br>
+    朝食はしっかり！11:00〜14:00は食事不可。十分（14時）が最初のチャンス！
+  </div>
+</div>
+</div>
+
+<!-- ━━━━━━━━━━━━━━ DAY 3 ━━━━━━━━━━━━━━ -->
+<div class="tab-panel" id="day3">
+<div class="day-section">
+  <div class="day-header day3">
+    <div class="day-number">Day 3 — 4/9 (목/木)</div>
+    <div class="day-title">디화제 · 용산사 · 딘타이펑 · 101</div>
+    <div class="day-title-jp">迪化街 → 龍山寺 → 鼎泰豊 → 台北101</div>
+    <div class="day-weather">☀️</div>
+  </div>
+
+  <div class="timeline">
+    <div class="timeline-item rest">
+      <div class="tl-time">08:30 — 09:00</div>
+      <div class="tl-title">호텔 근처 아침 / ホテル近くで朝食</div>
+      <div class="tl-desc">
+        <span class="tag food">단빙 (蛋餅) / 台湾クレープ</span>
+        <span class="tag food">더우장 (豆漿) / 豆乳</span>
+        <span class="tag food">판메이 (飯糰) / 台湾おにぎり</span>
+        <br>시먼 근처 아침식사 가게에서 간단히<br>西門近くの朝食屋でサクッと
+      </div>
+    </div>
+
+    <div class="timeline-item highlight">
+      <div class="tl-time">09:15 — 10:15</div>
+      <div class="tl-title">디화제 산책 / 迪化街を散歩</div>
+      <div class="tl-title-jp">ホテルから徒歩約15分</div>
+      <div class="tl-desc">
+        <span class="tag spot">건어물 거리 (乾物通り)</span>
+        <span class="tag shop">차(茶) 시음 / お茶の試飲</span>
+        <span class="tag spot">레트로 건축물</span>
+        <br>
+        <span class="tag food">디화제 간식: 말린 과일 시식 / ドライフルーツの試食</span>
+        <span class="tag food">따뜻한 차 한잔 / 温かいお茶一杯</span>
+      </div>
+    </div>
+
+    <div class="timeline-item highlight">
+      <div class="tl-time">10:30 — 11:00</div>
+      <div class="tl-title">용산사 참배 / 龍山寺 参拝</div>
+      <div class="tl-title-jp">迪化街から徒歩約15分</div>
+      <div class="tl-desc">
+        타이베이에서 가장 유명한 사찰 / 台北で最も有名なお寺<br>
+        <span class="tag food">주변 길거리 음식 (周辺の屋台グルメ)</span>
+      </div>
+    </div>
+
+    <div class="timeline-item meal">
+      <div class="tl-time">11:00 — 11:30</div>
+      <div class="tl-title">용산사 → 시먼 도보 / 龍山寺 → 西門を歩く</div>
+      <div class="tl-desc">
+        걸으면서 길거리 음식! / 食べ歩き！<br>
+        <span class="tag food">허피엔 (蚵仔煎) / 牡蠣オムレツ</span>
+        <span class="tag food">팥죽 (紅豆湯) / おしるこ</span>
+      </div>
+    </div>
+
+    <div class="timeline-item move">
+      <div class="tl-time">11:40</div>
+      <div class="tl-title">MRT 시먼 → 동먼역 (10분) / 西門 → 東門駅</div>
+    </div>
+
+    <div class="timeline-item highlight">
+      <div class="tl-time">12:00</div>
+      <div class="tl-title">딘타이펑 본점 / 鼎泰豊 信義本店</div>
+      <div class="tl-title-jp">番号札を取ってから珈品洋酒へ先に行くと時間節約！</div>
+      <div class="tl-desc">
+        번호표 뽑기! 대기 30~60분 / 番号札を取る！待ち30〜60分<br>
+        <span class="tag food">샤오롱바오 (小籠包) / ショウロンポウ</span>
+        <span class="tag food">새우볶음밥 (蝦仁炒飯) / エビチャーハン</span>
+        <span class="tag food">산라탕 (酸辣湯) / サンラータン</span>
+      </div>
+    </div>
+
+    <div class="timeline-item highlight">
+      <div class="tl-time">12:00 (대기 중)</div>
+      <div class="tl-title">珈品洋酒 — 카발란 위스키!</div>
+      <div class="tl-title-jp">カバランウイスキー購入！韓国の約1/3の価格</div>
+      <div class="tl-desc">
+        <span class="tag shop">永康街42號 — 딘타이펑 도보 3분!</span><br>
+        번호표 뽑고 대기 중에 위스키 고르기 / 番号待ちの間にウイスキーを選ぶ
+      </div>
+    </div>
+
+    <div class="timeline-item meal">
+      <div class="tl-time">12:30 — 13:30</div>
+      <div class="tl-title">딘타이펑 점심 / 鼎泰豊でランチ</div>
+    </div>
+
+    <div class="timeline-item rest">
+      <div class="tl-time">13:30 — 14:30</div>
+      <div class="tl-title">영캉제 카페 타임 / 永康街カフェタイム</div>
+      <div class="tl-title-jp">食後のデザート＆ひと休み</div>
+      <div class="tl-desc">
+        딘타이펑 후 디저트 + 여유롭게 쉬기<br>
+        <div class="dark-card food-theme">
+          <div class="dc-name">망고빙수 (芒果冰) / マンゴーかき氷</div>
+          <div class="dc-detail">
+            스무디류 가게가 영캉제에 많음. 4월이면 망고 시즌 시작!<br>
+            永康街にはスムージー店が多い。4月はマンゴーシーズン開始！<br>
+            <strong>~NT$150</strong>
+          </div>
+        </div>
+        <div class="dark-card food-theme" style="margin-top:6px">
+          <div class="dc-name">춘수이탕 (春水堂) / 春水堂 — 타피오카 밀크티 원조</div>
+          <div class="dc-detail">
+            버블티를 처음 만든 가게! 영캉제 근처 지점 있음<br>
+            タピオカミルクティー発祥の店！永康街近くに店舗あり<br>
+            <strong>밀크티 ~NT$180 / ミルクティー 〜NT$180</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="timeline-item move">
+      <div class="tl-time">14:30</div>
+      <div class="tl-title">MRT 동먼 → 타이베이101역 (10분)</div>
+    </div>
+
+    <div class="timeline-item highlight">
+      <div class="tl-time">14:30 — 16:00</div>
+      <div class="tl-title">타이베이 101 / 台北101</div>
+      <div class="tl-title-jp">外観写真＋ショッピングモール</div>
+      <div class="tl-desc">
+        올라가지 않고 외관 사진 + B1 푸드코트<br>
+        展望台は行かず、外観写真＋B1フードコート<br>
+        <span class="tag spot">신이구 (信義區) 산책</span>
+      </div>
+    </div>
+
+    <div class="timeline-item bar">
+      <div class="tl-time">16:30 — 18:00</div>
+      <div class="tl-title">101 앞 스피크이지 / 台北101前のバー</div>
+      <div class="tl-desc">
+        <div class="dark-card bar-theme">
+          <div class="dc-name">Alchemy Speakeasy Bar</div>
+          <div class="dc-name-jp">台北101の真向かい。隠しドアの奥にある秘密のバー</div>
+          <div class="dc-detail">
+            <strong>주소:</strong> 信義路五段16-1號 2樓 (101 맞은편!)<br>
+            <strong>입장:</strong> MQ바 → 계단 → 숨겨진 문<br>
+            <strong>영업:</strong> 월~수 20-24 / 목 20-02 / 금토 20-03<br>
+            <strong>칵테일 NT$450~600</strong> · Asia's 50 Best Bars
+          </div>
+        </div>
+        <div class="dark-card bar-theme" style="margin-top:6px">
+          <div class="dc-name">Draft Land Xinyi — 생맥주식 칵테일</div>
+          <div class="dc-name-jp">アジア初のドラフトカクテルバー</div>
+          <div class="dc-detail">캐주얼 스탠딩 바 / カジュアルスタンディングバー<br><strong>칵테일 NT$200~350</strong></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="timeline-item move">
+      <div class="tl-time">18:00</div>
+      <div class="tl-title">MRT로 시먼 복귀 / 西門へ戻る</div>
+    </div>
+
+    <div class="timeline-item rest">
+      <div class="tl-time">18:30 — 19:30</div>
+      <div class="tl-title">호텔 휴식 / ホテルで休憩</div>
+      <div class="tl-title-jp">マジマクの夜に備えてリフレッシュ！</div>
+      <div class="tl-desc">
+        하루종일 걸어다녀서 힘들 수 있음. 씻고 재충전!<br>
+        一日中歩いて疲れてるはず。シャワー浴びてリフレッシュ！<br>
+        <span class="tag">마지막 밤이니 좀 차려입고 나가기!</span>
+      </div>
+    </div>
+
+    <div class="timeline-item meal">
+      <div class="tl-time">19:30</div>
+      <div class="tl-title">시먼 마지막 저녁 / 西門ラストディナー</div>
+      <div class="tl-title-jp">最後の夜は少し贅沢に！ or ローカルに攻める！</div>
+      <div class="tl-desc">
+        <strong>A. 훠궈 (커플 추천!) / 火鍋:</strong>
+        <div class="dark-card food-theme">
+          <div class="dc-name">야샹 스토우 훠궈 (雅香石頭火鍋) 시먼점</div>
+          <div class="dc-name-jp">石焼き火鍋の元祖！現地人に大人気</div>
+          <div class="dc-detail">
+            돌판에 고기·야채 볶은 뒤 육수 → 대만식 훠궈<br>
+            石板で肉と野菜を炒めてからスープ → 台湾式火鍋<br>
+            <strong>2인 ~NT$800 / 맥주 OK / ビール注文OK</strong>
+          </div>
+        </div>
+        <div class="dark-card food-theme" style="margin-top:6px">
+          <div class="dc-name">딩왕 마라훠궈 (鼎王麻辣鍋) 시먼점</div>
+          <div class="dc-name-jp">高級マーラー火鍋。韓国芸能人も通う</div>
+          <div class="dc-detail">
+            오리선지 홍탕 + 신배추 백탕 반반! / 鴨血の紅湯＋白菜の白湯ハーフ＆ハーフ<br>
+            <strong>2인 ~NT$1,500 / 예약 추천 / 要予約</strong>
+          </div>
+        </div>
+        <br>
+        <strong>B. 가볍게 로컬 / カジュアルにローカル飯:</strong><br>
+        <span class="tag food">홍사부 우육면 (洪師父牛肉麵) / 受賞牛肉麺 ~NT$220</span>
+        <span class="tag food">시먼면점 (西門麵店) 24시간 / 豚足飯 NT$100</span>
+        <span class="tag food">밀크티 (珍珠奶茶) / タピオカミルクティー</span>
+        <span class="tag food">지파이 (鷄排) / フライドチキン</span>
+      </div>
+    </div>
+
+    <div class="timeline-item bar">
+      <div class="tl-time">21:00 ~</div>
+      <div class="tl-title">마지막 밤 2차 / ラストナイト二次会</div>
+      <div class="tl-desc">
+        <div class="dark-card bar-theme">
+          <div class="dc-name">HANKO 60 (漢口60)</div>
+          <div class="dc-name-jp">初日に行けなかった場合はここで！</div>
+          <div class="dc-detail">첫날 못 갔다면 마지막 밤에! / 漢口街二段60號 · 시먼역 도보 5분</div>
+        </div>
+        <div class="dark-card bar-theme" style="margin-top:6px">
+          <div class="dc-name">Geography Bar — 시먼딩 히든바 4F</div>
+          <div class="dc-name-jp">台湾産フルーツ＆お茶のカクテルが特徴</div>
+          <div class="dc-detail">대만산 과일/차 칵테일 / <strong>NT$300~450</strong></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tip-box">
+    <b>TIP</b> 딘타이펑 번호표 → 珈品洋酒 → 딘타이펑 순서로 대기시간 0!<br>
+    鼎泰豊の番号札 → 珈品洋酒 → 鼎泰豊の順で待ち時間ゼロ！
+  </div>
+</div>
+</div>
+
+<!-- ━━━━━━━━━━━━━━ DAY 4 ━━━━━━━━━━━━━━ -->
+<div class="tab-panel" id="day4">
+<div class="day-section">
+  <div class="day-header day4">
+    <div class="day-number">Day 4 — 4/10 (금/金)</div>
+    <div class="day-title">마지막 쇼핑 · 귀국</div>
+    <div class="day-title-jp">最後のショッピング → 帰国</div>
+    <div class="day-weather">✈️</div>
+  </div>
+
+  <div class="timeline">
+    <div class="timeline-item">
+      <div class="tl-time">09:00</div>
+      <div class="tl-title">체크아웃 / 짐 프론트에 맡기기</div>
+      <div class="tl-title-jp">チェックアウト / 荷物をフロントに預ける</div>
+    </div>
+
+    <div class="timeline-item meal">
+      <div class="tl-time">09:15 — 10:30</div>
+      <div class="tl-title">시먼 아침 산책 + 브런치 / 西門でブランチ</div>
+      <div class="tl-desc">
+        <span class="tag food">단빙 (蛋餅) / 台湾クレープ</span>
+        <span class="tag food">더우장 (豆漿) / 豆乳</span>
+        <span class="tag food">루로우판 (滷肉飯) / ルーローハン</span>
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="tl-time">10:30 — 12:00</div>
+      <div class="tl-title">시먼 마지막 쇼핑 / 西門で最後のお買い物</div>
+      <div class="tl-desc">
+        <span class="tag shop">펑리수 (鳳梨酥) / パイナップルケーキ</span>
+        <span class="tag shop">누가크래커 (牛軋糖餅乾) / ヌガークラッカー</span>
+        <span class="tag shop">마스크팩 / フェイスマスク — 왓슨스</span>
+      </div>
+    </div>
+
+    <div class="timeline-item meal">
+      <div class="tl-time">12:00</div>
+      <div class="tl-title">가벼운 점심 / 軽めのランチ</div>
+      <div class="tl-desc">
+        <span class="tag food">아종미엔셴 (阿宗麵線) / とろみそうめん</span>
+        <span class="tag food">밀크티 한 잔 (珍珠奶茶) / タピオカ一杯</span>
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="tl-time">12:45</div>
+      <div class="tl-title">호텔에서 짐 찾기 / ホテルで荷物受取</div>
+    </div>
+
+    <div class="timeline-item move">
+      <div class="tl-time">13:00</div>
+      <div class="tl-title">MRT 시먼 → 타이베이역 → 공항MRT (45분)</div>
+      <div class="tl-title-jp">MRT西門 → 台北駅 → 空港MRT（約45分）</div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="tl-time">13:45</div>
+      <div class="tl-title">타오위안 공항 도착 / 桃園空港 到着</div>
+      <div class="tl-desc">
+        면세점 쇼핑 여유 충분! / 免税店、余裕たっぷり！<br>
+        <span class="tag shop">카발란 위스키 면세점에도 있음 (珈品洋酒가 더 저렴)</span>
+      </div>
+    </div>
+
+    <div class="timeline-item highlight">
+      <div class="tl-time">17:10</div>
+      <div class="tl-title">OZ714 출발! / OZ714 出発！</div>
+      <div class="tl-title-jp">お疲れ様でした！좋은 여행 되세요!</div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ━━ Useful Info ━━ -->
+<div class="info-section">
+  <div class="info-grid">
+    <div class="info-card">
+      <h3>🚇 MRT 소요시간</h3>
+      <ul>
+        <li>시먼 → 스린 (고궁): 25분</li>
+        <li>시먼 → 동먼 (딘타이펑): 10분</li>
+        <li>동먼 → 101: 10분</li>
+        <li>시먼 → 타이베이역: 5분</li>
+        <li>타이베이역 → 공항: 35분</li>
+      </ul>
+    </div>
+    <div class="info-card">
+      <h3>💳 준비물 / 持ち物</h3>
+      <ul>
+        <li>이지카드 (悠遊卡) 공항 구매</li>
+        <li>우산/우비 (1일차) / 傘（初日）</li>
+        <li>편한 신발 / 歩きやすい靴</li>
+        <li>보조배터리 / モバイルバッテリー</li>
+        <li>MRT 첫차 06:00 / 막차 24:00</li>
+      </ul>
+    </div>
+    <div class="info-card">
+      <h3>🛍️ 추천 선물 / お土産</h3>
+      <ul>
+        <li>펑리수 (鳳梨酥) 웨이거 or 지아더</li>
+        <li>카발란 위스키 — 珈品洋酒</li>
+        <li>누가크래커 (牛軋糖餅乾)</li>
+        <li>대만 차 (台湾茶) — 디화제</li>
+        <li>마스크팩 — 왓슨스</li>
+      </ul>
+    </div>
+    <div class="info-card">
+      <h3>📍 주요 주소 / 住所</h3>
+      <ul>
+        <li>珈品洋酒: 永康街42號</li>
+        <li>딘타이펑: 信義路二段194號</li>
+        <li>HANKO 60: 漢口街二段60號</li>
+        <li>Alchemy: 信義路五段16-1號 2F</li>
+        <li>고궁: 至善路二段221號</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  즐거운 대만 여행 되세요! 🇹🇼 素敵な台湾旅行を！
+</div>
+
+<script>
+function switchTab(day) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelector(`.tab-btn[data-day="${day}"]`).classList.add('active');
+  document.getElementById(`day${day}`).classList.add('active');
+  window.scrollTo({ top: document.querySelector('.tab-bar').offsetTop - 10, behavior: 'smooth' });
+}
+</script>
+</body>
+</html>
