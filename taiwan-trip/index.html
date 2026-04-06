@@ -148,7 +148,7 @@
   .timeline-item::before {
     content: '';
     position: absolute;
-    left: -22px; top: 18px;
+    left: -23px; top: 18px;
     width: 10px; height: 10px;
     border-radius: 50%;
     border: 2px solid var(--border);
@@ -957,7 +957,7 @@ function switchTab(day) {
   document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
   document.querySelector(`.tab-btn[data-day="${day}"]`).classList.add('active');
   document.getElementById(`day${day}`).classList.add('active');
-  window.scrollTo({ top: document.querySelector('.tab-bar').offsetTop - 10, behavior: 'smooth' });
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 </script>
 </body>
